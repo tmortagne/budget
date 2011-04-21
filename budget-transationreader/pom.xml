@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.mortagne.budget</groupId>
+		<artifactId>budget</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>budget-transationreader</artifactId>
+	<name>Budget - Transation reader</name>
+	<packaging>jar</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.xwiki.commons</groupId>
+			<artifactId>xwiki-commons-component-api</artifactId>
+			<version>${xwiki.commons.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xwiki.commons</groupId>
+			<artifactId>xwiki-commons-script</artifactId>
+			<version>${xwiki.commons.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.xpn.xwiki.platform</groupId>
+			<artifactId>xwiki-core</artifactId>
+			<version>${xwiki.platform.version}</version>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>org.xwiki.commons</groupId>
+			<artifactId>xwiki-commons-test</artifactId>
+			<version>${xwiki.commons.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

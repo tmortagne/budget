@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ *
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.mortagne.budget</groupId>
+  <artifactId>budget</artifactId>
+  <name>Budget - Parent POM</name>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <properties>
+    <!-- By default Checkstyle and Clirr are on by default -->
+    <xwiki.checkstyle.skip>true</xwiki.checkstyle.skip>
+    <xwiki.clirr.skip>true</xwiki.clirr.skip>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
+    <xwiki.commons.version>3.0</xwiki.commons.version>
+    <xwiki.platform.version>3.0</xwiki.platform.version>
+  </properties>
+  <url>http://budget.mortagne.org</url>
+  <inceptionYear>2011</inceptionYear>
+  <licenses>
+    <license>
+      <name>LGPL 2.1</name>
+      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <!--
+  <issueManagement>
+    <system>jira</system>
+    <url>http://jira.xwiki.org/jira/browse/XCOMMONS</url>
+  </issueManagement>
+  -->
+  <developers />
+  <contributors />
+  <organization>
+    <name>Thomas Mortagne</name>
+    <url>http://mortagne.org/</url>
+  </organization>
+  <!--
+  <scm>
+    <connection>scm:git:git://github.com/xwiki/xwiki-commons.git</connection>
+    <developerConnection>scm:git:git@github.com:xwiki/xwiki-commons.git</developerConnection>
+    <url>https://github.com/xwiki/xwiki-commons</url>
+  </scm>
+  -->
+  <!--
+  <mailingLists>
+    <mailingList>
+      <name>XWiki Users List</name>
+      <post>users@xwiki.org</post>
+      <subscribe>http://lists.xwiki.org/mailman/listinfo/users</subscribe>
+      <unsubscribe>http://lists.xwiki.org/mailman/listinfo/users</unsubscribe>
+      <archive>http://lists.xwiki.org/pipermail/users/</archive>
+      <otherArchives>
+        <otherArchive>http://xwiki.markmail.org/</otherArchive>
+        <otherArchive>http://www.nabble.com/XWiki-f2563.html</otherArchive>
+        <otherArchive>http://gmane.org/find.php?list=xwiki</otherArchive>
+      </otherArchives>
+    </mailingList>
+    <mailingList>
+      <name>XWiki Developers List</name>
+      <post>devs@xwiki.org</post>
+      <subscribe>http://lists.xwiki.org/mailman/listinfo/devs</subscribe>
+      <unsubscribe>http://lists.xwiki.org/mailman/listinfo/devs</unsubscribe>
+      <archive>http://lists.xwiki.org/pipermail/devs/</archive>
+      <otherArchives>
+        <otherArchive>http://xwiki.markmail.org/</otherArchive>
+        <otherArchive>http://www.nabble.com/XWiki-f2563.html</otherArchive>
+        <otherArchive>http://gmane.org/find.php?list=xwiki</otherArchive>
+      </otherArchives>
+    </mailingList>
+  </mailingLists>
+  -->
+  <dependencyManagement>
+    <dependencies>
+      <!-- Apache Commons -->
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.6</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2.1</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-net</groupId>
+        <artifactId>commons-net</artifactId>
+        <version>2.2</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-httpclient</groupId>
+        <artifactId>commons-httpclient</artifactId>
+        <version>3.1</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+        <version>1.3</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>1.2.2</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>1.4</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.8.3</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-configuration</groupId>
+        <artifactId>commons-configuration</artifactId>
+        <version>1.6</version>
+      </dependency>
+
+      <!-- Everybody logs -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.6.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.6.1</version>
+      </dependency>
+
+      <!-- Everybody tests -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit-dep</artifactId>
+        <version>4.8.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-core</artifactId>
+        <version>1.1</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jmock</groupId>
+        <artifactId>jmock</artifactId>
+        <version>2.5.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jmock</groupId>
+        <artifactId>jmock-junit4</artifactId>
+        <version>2.5.1</version>
+        <exclusions>
+          <!-- Exclude JUnit since JMock draws an oldish version of JUnit and we wish to use a newer one -->
+          <exclusion>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.jmock</groupId>
+        <artifactId>jmock-legacy</artifactId>
+        <version>2.5.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <!-- Lock down plugin version for build reproducibility -->
+          <version>2.3.2</version>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <!-- Lock down plugin version for build reproducibility -->
+          <version>2.7.2</version>
+          <configuration>
+            <includes>
+              <include>**/*Test.class</include>
+            </includes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <!-- Lock down plugin version for build reproducibility -->
+          <version>2.5</version>
+          <!-- We're deploying using the SCP protocol so we need the SSH Wagon for Maven 3 to work -->
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.wagon</groupId>
+              <artifactId>wagon-ssh</artifactId>
+              <version>1.0-beta-7</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>clirr-maven-plugin</artifactId>
+          <!-- Lock down plugin version for build reproducibility -->
+          <version>2.3</version>
+          <executions>
+            <execution>
+              <id>clirr-check</id>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <skip>${xwiki.clirr.skip}</skip>
+            <excludes>
+              <exclude>**/internal/**</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <modules>
+    <module>budget-transationreader</module>
+    <!--<module>budget-ui</module>-->
+  </modules>
+  <repositories>
+    <!-- This is XWiki's custom remote repository containing artifacts that are not present on
+         Maven's main remote repository. -->
+    <repository>
+      <id>xwiki-externals</id>
+      <name>XWiki Maven2 Remote Repository for Third Party Dependencies</name>
+      <url>http://maven.xwiki.org/externals</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>xwiki-releases</id>
+      <name>XWiki Maven2 Remote Repository for Releases</name>
+      <url>http://maven.xwiki.org/releases</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>xwiki-snapshots</id>
+      <name>XWiki Maven2 Remote Repository for Snapshots</name>
+      <url>http://maven.xwiki.org/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>xwiki-plugins-externals</id>
+      <name>XWiki Maven2 Plugin Remote Repository for Third Party Plugins</name>
+      <url>http://maven.xwiki.org/externals</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+      <id>xwiki-plugins-releases</id>
+      <name>XWiki Maven2 Plugin Remote Repository for Releases</name>
+      <url>http://maven.xwiki.org/releases</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+      <id>xwiki-plugins-snapshots</id>
+      <name>XWiki Maven2 Plugin Remote Repository for Snapshots</name>
+      <url>http://maven.xwiki.org/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+</project>

@@ -1,0 +1,2 @@
+org.mortagne.budget.internal.transation.io.qif.QIFTransactionReaderFactory
+org.mortagne.budget.internal.transation.io.lcl.LCLQIFTransactionReaderFactory

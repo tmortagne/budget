@@ -1,0 +1,102 @@
+!Type:Bank
+D11/04/11
+T-66.50
+NCarte
+P CB  SNCF             09/04/11  
+L
+^
+D12/04/11
+T-35.31
+NPrélèvement
+PPRLV Free Telecom               
+^
+D13/04/11
+T500.00
+NVirement
+MVIREMENT CHAMBON                
+^
+D14/04/11
+T55.00
+^
+D14/04/11
+T-149.80
+NCarte
+P CB  SINEQUANONE      13/04/11  
+L
+^
+D15/04/11
+T-21.20
+NCarte
+P CB  SBV              14/04/11  
+L
+^
+D15/04/11
+T-2.94
+NCarte
+PTOTAL OPTION SYSTEM' EPARGNE    
+L
+^
+D15/04/11
+T-34.90
+NCarte
+P CB  MONCEAU FLEURS   14/04/11  
+L
+^
+D15/04/11
+T-45.00
+NVirement
+PVIR.PERMANENT MORTAGNE          
+^
+D18/04/11
+T-37.52
+NCarte
+P CB  LIDL 0588        16/04/11  
+L
+^
+D18/04/11
+T-56.50
+NCarte
+P CB  VENTE PRIVEE.COM 13/04/11  
+L
+^
+D18/04/11
+T-51.62
+NCarte
+P CB  UNIVERS DELICE   17/04/11  
+L
+^
+D18/04/11
+T-50.00
+NCarte
+P CB  RETRAIT DU  17/04          
+L
+^
+D18/04/11
+T-44.90
+NCarte
+P CB  PICARD SURGELES  15/04/11  
+L
+^
+D18/04/11
+T-373.00
+NPrélèvement
+PPRLV TRESOR PUBLIC   75 IMPOT   
+^
+D19/04/11
+T-118.97
+NCarte
+P CB  AUCHAN CALUIRE   18/04/11  
+L
+^
+D19/04/11
+T-14.80
+NCarte
+P CB  BOUL PAUL 672    18/04/11  
+L
+^
+D19/04/11
+T-4.70
+NCarte
+P CB  APRR AUTOROUTE   15/04/11  
+L
+^
