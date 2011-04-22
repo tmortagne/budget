@@ -11,9 +11,9 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303318305000</creationDate>
-<date>1303325125000</date>
-<contentUpdateDate>1303325125000</contentUpdateDate>
-<version>9.8</version>
+<date>1303484676000</date>
+<contentUpdateDate>1303484676000</contentUpdateDate>
+<version>9.15</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -23,11 +23,21 @@
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
 <content>{{groovy}}
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 import org.mortagne.budget.transation.Transaction;
 import org.mortagne.budget.transation.io.TransactionReader;
 import org.mortagne.budget.transation.io.TransactionReaderConfiguration;
 import org.mortagne.budget.transation.io.TransactionReaderFactory;
+import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.EntityReference;
+import org.xwiki.query.Query;
+import org.xwiki.query.QueryException;
+import org.xwiki.query.QueryManager;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
@@ -38,7 +48,9 @@ import com.xpn.xwiki.web.Utils;
 
 class BudgetService
 {
-    XWikiContext context;
+    private XWikiContext context;
+
+    private Map&lt;String, String&gt; filters;
 
     public BudgetService(XWikiContext context)
     {
@@ -50,9 +62,50 @@ class BudgetService
         return "Account" + account;
     }
 
+    public Map&lt;String, String&gt; getFilters() throws QueryException
+    {
+        if (this.filters == null) {
+            this.filters = new HashMap&lt;String, String&gt;();
+
+            QueryManager queryManager = Utils.getComponent(QueryManager.class);
+
+            Query query =
+                queryManager
+                    .createQuery(
+                        "select filter.pattern, filter.category from Document doc, doc.object(BudgetCode.AccountTransactionFilterClass) as filter",
+                        Query.XWQL);
+
+            List&lt;Object[]&gt; filtersDatas = query.execute();
+
+            for (Object[] filterDatas in filtersDatas) {
+                this.filters.put((String) filterDatas[0], (String) filterDatas[1]);
+            }
+        }
+
+        return this.filters;
+    }
+
+    private String getCategory(String description)
+    {
+        Map&lt;String, String&gt; filters;
+        try {
+            filters = getFilters();
+        } catch (QueryException e) {
+            return null;
+        }
+
+        for (Map.Entry&lt;String, String&gt; entry in filters.entrySet()) {
+            if (Pattern.matches(entry.getKey(), description)) {
+                return entry.getValue();
+            }
+        }
+
+        return null;
+    }
+
     public DocumentReference getTransactionDocument(String wiki, String account, Transaction transaction)
     {
-        return new DocumentReference(wiki, getAccountSpace(account), transaction.getId());
+        return new DocumentReference(wiki, getAccountSpace(account), transaction.getId().replace('/', '-'));
     }
 
     public void importAttachment(String attachmentFilename, String readerId, String account) throws Exception
@@ -76,6 +129,12 @@ class BudgetService
         }
     }
 
+    public XWikiDocument getAccountTransactionTemplate() throws XWikiException
+    {
+        return this.context.getWiki().getDocument(
+            new DocumentReference(context.getDatabase(), "BudgetCode", "AccountTransactionClassTemplate"), context);
+    }
+
     public DocumentReference registerTransation(Transaction transaction, String account, boolean force)
         throws XWikiException
     {
@@ -83,11 +142,23 @@ class BudgetService
             this.context.getWiki().getDocument(
                 getTransactionDocument(this.context.getDatabase(), account, transaction), this.context);
 
-        if (force || document.isNew()) {
+        //if (force || document.isNew()) {
+            XWikiDocument template = getAccountTransactionTemplate();
+
+            if (!template.isNew()) {
+                document.setTitle(template.getTitle());
+                document.setContent(template.getContent());
+                document.setSyntax(template.getSyntax());
+                document.mergeXObjects(template);
+            }
+
+            document.setParentReference(new EntityReference("WebHome", EntityType.DOCUMENT));
+
             BaseObject xtransaction =
                 document.getXObject(new DocumentReference(this.context.getDatabase(), "BudgetCode",
                     "AccountTransactionClass"), true, this.context);
 
+            xtransaction.setStringValue("account", account);
             xtransaction.setStringValue("description", transaction.getDescription());
             xtransaction.setStringValue("type", transaction.getType());
             xtransaction.setDateValue("date", transaction.getDate());
@@ -95,12 +166,15 @@ class BudgetService
                 : transaction.getDate());
             xtransaction.setFloatValue("value", transaction.getValue());
 
+            xtransaction.setStringValue("category", getCategory(transaction.getDescription()));
+
             this.context.getWiki().saveDocument(document, this.context);
-        }
+        //}
 
         return document.getDocumentReference();
     }
 }
+
 
 if (xcontext.get("budgetservice") == null) {
   xcontext.put("budgetservice", new BudgetService(xcontext.context))

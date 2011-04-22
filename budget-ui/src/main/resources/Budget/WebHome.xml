@@ -11,10 +11,10 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303313118000</creationDate>
-<date>1303313193000</date>
-<contentUpdateDate>1303313193000</contentUpdateDate>
-<version>2.1</version>
-<title></title>
+<date>1303479966000</date>
+<contentUpdateDate>1303479966000</contentUpdateDate>
+<version>6.1</version>
+<title>Budget</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
@@ -22,4 +22,6 @@
 <minorEdit>false</minorEdit>
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
-<content>{{include document="Budget.Accounts"/}}</content></xwikidoc>
+<content>[[Filters&gt;&gt;Filters]] - [[Categories&gt;&gt;Categories]]
+
+{{include document="Budget.Accounts"/}}</content></xwikidoc>
