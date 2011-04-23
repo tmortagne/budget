@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xwikidoc>
 <web>BudgetCode</web>
-<name>AccountTransactionFilterClass</name>
+<name>AccountTransactionFilterClassTemplate</name>
 <language></language>
-<defaultLanguage></defaultLanguage>
+<defaultLanguage>en</defaultLanguage>
 <translation>0</translation>
-<parent></parent>
+<parent>Budget.Filters</parent>
 <creator>xwiki:XWiki.ThomasMortagne</creator>
 <author>xwiki:XWiki.ThomasMortagne</author>
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303475796000</creationDate>
-<date>1303565438000</date>
-<contentUpdateDate>1303565438000</contentUpdateDate>
-<version>3.6</version>
-<title></title>
+<creationDate>1303564908000</creationDate>
+<date>1303565222000</date>
+<contentUpdateDate>1303565222000</contentUpdateDate>
+<version>3.1</version>
+<title>Filter $doc.getObject("BudgetCode.AccountTransactionFilterClass").getProperty("name").value</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
-<comment>Updated class property</comment>
-<minorEdit>true</minorEdit>
+<comment></comment>
+<minorEdit>false</minorEdit>
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
+<object>
 <class>
 <name>BudgetCode.AccountTransactionFilterClass</name>
 <customClass></customClass>
@@ -93,18 +94,18 @@
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </pattern>
 </class>
-<content>{{velocity output="false"}}
-#set($filter = $doc.getObject("BudgetCode.AccountTransactionFilterClass"))
-{{/velocity}}
-
-{{velocity}}
-#if ($filter)
-  Name: $filter.get('name')
-  Descrition: $filter.description
-  Pattern: $filter.pattern
-  Category: $filter.category
-#else
-  {{warning}}No //BudgetCode.AccountTransactionFilterClass// object found.{{/warning}} 
-#end
-{{/velocity}}
-</content></xwikidoc>
+<name>BudgetCode.AccountTransactionFilterClassTemplate</name>
+<number>0</number>
+<className>BudgetCode.AccountTransactionFilterClass</className>
+<guid>2f62fd3b-5e14-494b-be05-c1bf004ffe4a</guid>
+<property>
+<category></category>
+</property>
+<property>
+<name></name>
+</property>
+<property>
+<pattern></pattern>
+</property>
+</object>
+<content>{{include document="BudgetCode.AccountTransactionFilterClass"/}}</content></xwikidoc>

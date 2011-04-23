@@ -11,14 +11,14 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303475833000</creationDate>
-<date>1303475860000</date>
-<contentUpdateDate>1303475860000</contentUpdateDate>
-<version>1.4</version>
-<title></title>
+<date>1303575077000</date>
+<contentUpdateDate>1303575077000</contentUpdateDate>
+<version>3.48</version>
+<title>Category sheet page</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
-<comment>Added class property</comment>
+<comment></comment>
 <minorEdit>true</minorEdit>
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
@@ -51,4 +51,30 @@
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </name>
 </class>
-<content></content></xwikidoc>
+<content>{{velocity output="false"}}
+#set($category = $doc.getObject("BudgetCode.AccountTransactionCategoryClass"))
+{{/velocity}}
+
+{{velocity}}
+#if ($category)
+  Name: $category.get('name')
+  Descrition: $category.description
+#else
+  {{warning}}No //BudgetCode.AccountTransactionCategoryClass// object found.{{/warning}} 
+#end
+{{/velocity}}
+
+{{velocity}}
+#set($transactions = $xwiki.queryManager.createQuery("select month(realdate.value), sum(value.value) from BaseObject as obj, StringProperty as category, DateProperty as realdate, FloatProperty as value where obj.className='BudgetCode.AccountTransactionClass' and obj.id=category.id.id and category.id.name='category' and category.value = 'train' and obj.id=realdate.id.id and realdate.id.name='realdate' and obj.id=value.id.id and value.id.name='value' group by month(realdate.value)", 'hql').execute())
+#if ($transactions.size() &gt; 0)
+  {{chart type="bar" source="inline" params="range:B1-B${transactions.size()};series:columns;" title="Category value"}}
+    #foreach($transaction in $transactions)
+      #set ($positiveValue = $transaction.get(1))
+      #if ($positiveValue &lt; 0)
+        #set ($positiveValue = $positiveValue * -1)
+      #end
+      |$transaction.get(0)|$positiveValue
+    #end
+  {{/chart}}
+#end
+{{/velocity}}</content></xwikidoc>

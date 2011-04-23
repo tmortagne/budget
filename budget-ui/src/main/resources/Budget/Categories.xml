@@ -11,9 +11,9 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303479758000</creationDate>
-<date>1303479857000</date>
-<contentUpdateDate>1303479857000</contentUpdateDate>
-<version>3.1</version>
+<date>1303563960000</date>
+<contentUpdateDate>1303563960000</contentUpdateDate>
+<version>5.1</version>
 <title>Categories</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -37,4 +37,18 @@
 
 = Add new category
 
-# TODO</content></xwikidoc>
+{{velocity}}
+{{html}}
+&lt;form action="$xwiki.getDocument("BudgetCode.CreateCategory").getURL()" id="newproject"&gt;
+  &lt;div&gt;
+    &lt;input type="hidden" name="parent" value="$doc.fullName" /&gt;
+    &lt;input type="hidden" name="classname" value="BudgetCode.AccountTransactionCategoryClass" /&gt;
+    &lt;input type="hidden" name="template" value="BudgetCode.AccountTransactionCategoryClassTemplate" /&gt;
+    &lt;input type="hidden" name="space" value="$doc.space"/&gt;
+    &lt;input type="hidden" name="xaction" value="create"/&gt;
+    &lt;input type="text" name="category" value="" size="30"/&gt;
+    &lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" value="Add this category"/&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+{{/html}}
+{{/velocity}}</content></xwikidoc>

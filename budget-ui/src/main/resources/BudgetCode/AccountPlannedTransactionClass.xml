@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xwikidoc>
 <web>BudgetCode</web>
-<name>AccountTransactionFilterClass</name>
+<name>AccountPlannedTransactionClass</name>
 <language></language>
 <defaultLanguage></defaultLanguage>
 <translation>0</translation>
@@ -10,10 +10,10 @@
 <author>xwiki:XWiki.ThomasMortagne</author>
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303475796000</creationDate>
-<date>1303565438000</date>
-<contentUpdateDate>1303565438000</contentUpdateDate>
-<version>3.6</version>
+<creationDate>1303561851000</creationDate>
+<date>1303565632000</date>
+<contentUpdateDate>1303565632000</contentUpdateDate>
+<version>1.13</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -23,7 +23,7 @@
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
 <class>
-<name>BudgetCode.AccountTransactionFilterClass</name>
+<name>BudgetCode.AccountPlannedTransactionClass</name>
 <customClass></customClass>
 <customMapping></customMapping>
 <defaultViewSheet></defaultViewSheet>
@@ -39,7 +39,7 @@
 <idField>name</idField>
 <multiSelect>0</multiSelect>
 <name>category</name>
-<number>4</number>
+<number>7</number>
 <picker>0</picker>
 <prettyName>category</prettyName>
 <relationalStorage>0</relationalStorage>
@@ -54,20 +54,32 @@
 <valueField></valueField>
 <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
 </category>
-<description>
+<cron>
 <disabled>0</disabled>
-<editor>---</editor>
-<name>description</name>
+<name>cron</name>
 <number>2</number>
 <picker>0</picker>
-<prettyName>description</prettyName>
-<rows>5</rows>
-<size>40</size>
+<prettyName>cron</prettyName>
+<size>30</size>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-</description>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cron>
+<date>
+<dateFormat>dd/MM/yyyy HH:mm:ss</dateFormat>
+<disabled>0</disabled>
+<emptyIsToday>1</emptyIsToday>
+<name>date</name>
+<number>7</number>
+<picker>1</picker>
+<prettyName>date</prettyName>
+<size>20</size>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.DateClass</classType>
+</date>
 <name>
 <disabled>0</disabled>
 <name>name</name>
@@ -80,6 +92,18 @@
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </name>
+<offset>
+<disabled>0</disabled>
+<name>offset</name>
+<number>5</number>
+<numberType>float</numberType>
+<prettyName>offset</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+</offset>
 <pattern>
 <disabled>0</disabled>
 <name>pattern</name>
@@ -92,19 +116,17 @@
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </pattern>
+<value>
+<disabled>0</disabled>
+<name>value</name>
+<number>4</number>
+<numberType>float</numberType>
+<prettyName>value</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+</value>
 </class>
-<content>{{velocity output="false"}}
-#set($filter = $doc.getObject("BudgetCode.AccountTransactionFilterClass"))
-{{/velocity}}
-
-{{velocity}}
-#if ($filter)
-  Name: $filter.get('name')
-  Descrition: $filter.description
-  Pattern: $filter.pattern
-  Category: $filter.category
-#else
-  {{warning}}No //BudgetCode.AccountTransactionFilterClass// object found.{{/warning}} 
-#end
-{{/velocity}}
-</content></xwikidoc>
+<content></content></xwikidoc>
