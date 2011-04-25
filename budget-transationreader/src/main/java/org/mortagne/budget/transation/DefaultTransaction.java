@@ -19,6 +19,11 @@ public class DefaultTransaction extends AbstractTransaction
         this.description = description;
     }
 
+    public void setDetails(String details)
+    {
+        this.details = details;
+    }
+
     public void setType(String type)
     {
         this.type = type;

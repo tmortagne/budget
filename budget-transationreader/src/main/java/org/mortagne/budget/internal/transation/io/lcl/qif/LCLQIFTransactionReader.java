@@ -1,4 +1,4 @@
-package org.mortagne.budget.internal.transation.io.lcl;
+package org.mortagne.budget.internal.transation.io.lcl.qif;
 
 import java.io.IOException;
 import java.io.InputStream;

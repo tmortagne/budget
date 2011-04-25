@@ -26,11 +26,18 @@
 			<artifactId>xwiki-commons-script</artifactId>
 			<version>${xwiki.commons.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.xpn.xwiki.platform</groupId>
 			<artifactId>xwiki-core</artifactId>
 			<version>${xwiki.platform.version}</version>
+		</dependency>
+
+        <!-- PDF parsing -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.0.6</version>
 		</dependency>
 
 		<!-- Test dependencies -->
@@ -41,4 +48,11 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>itextpdf.com</id>
+			<name>Maven Repository for iText</name>
+			<url>http://maven.itextpdf.com/</url>
+		</repository>
+	</repositories>
 </project>

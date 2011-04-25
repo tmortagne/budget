@@ -7,6 +7,8 @@ public interface Transaction
     String getId();
 
     String getDescription();
+    
+    String getDetails();
 
     Date getDate();
 

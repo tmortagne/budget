@@ -1,7 +1,6 @@
-package org.mortagne.budget.internal.transation.io.lcl;
+package org.mortagne.budget.internal.transation.io.lcl.qif;
 
 import java.io.InputStream;
-import java.net.URL;
 import java.text.DateFormat;
 import java.util.Locale;
 
@@ -11,12 +10,12 @@ import org.mortagne.budget.transation.io.TransactionReaderFactory;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.logging.AbstractLogEnabled;
 
-@Component("lcl")
+@Component("lcl.qif")
 public class LCLQIFTransactionReaderFactory extends AbstractLogEnabled implements TransactionReaderFactory
 {
     public String getName()
     {
-        return "LCL";
+        return "LCL QIF";
     }
 
     public String getDescription()

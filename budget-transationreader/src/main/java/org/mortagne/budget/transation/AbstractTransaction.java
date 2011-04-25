@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 public class AbstractTransaction implements Transaction
 {
     protected String description;
+    
+    protected String details;
 
     protected Date date;
 
@@ -38,6 +40,11 @@ public class AbstractTransaction implements Transaction
     public String getDescription()
     {
         return this.description;
+    }
+    
+    public String getDetails()
+    {
+        return details;
     }
 
     public Date getDate()

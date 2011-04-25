@@ -1,4 +1,4 @@
-package org.mortagne.budget.internal.transation.io.qif;
+package org.mortagne.budget.internal.transation.io.lcl.pdf;
 
 import java.io.InputStream;
 
@@ -8,23 +8,23 @@ import org.mortagne.budget.transation.io.TransactionReaderFactory;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.logging.AbstractLogEnabled;
 
-@Component("qif")
-public class QIFTransactionReaderFactory extends AbstractLogEnabled implements TransactionReaderFactory
+@Component("lcl.pdf")
+public class LCLPDFTransactionReaderFactory extends AbstractLogEnabled implements TransactionReaderFactory
 {
     public String getName()
     {
-        return "Generic QIF";
+        return "LCL PDF";
     }
 
     public String getDescription()
     {
-        return "Generic QIF";
+        return "LCL PDF based \"RELEVE DE COMPTE\"";
     }
 
     public TransactionReader createTransactionReader(InputStream transationStream,
         TransactionReaderConfiguration configuration)
     {
-        QIFTransactionReader reader =  new QIFTransactionReader(transationStream, configuration);
+        LCLPDFTransactionReader reader =  new LCLPDFTransactionReader(transationStream, configuration);
         
         reader.enableLogging(getLogger());
         
