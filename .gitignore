@@ -27,4 +27,4 @@ nbproject
 .clover
 
 # budget specific
-BudgetService.java
+BudgetServiceGroovy.java
