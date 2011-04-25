@@ -11,18 +11,20 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303313151000</creationDate>
-<date>1303564657000</date>
-<contentUpdateDate>1303564657000</contentUpdateDate>
-<version>9.1</version>
+<date>1303667074000</date>
+<contentUpdateDate>1303667074000</contentUpdateDate>
+<version>10.77</version>
 <title>Accounts</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
-<minorEdit>false</minorEdit>
+<minorEdit>true</minorEdit>
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
-<content>{{velocity}}
+<content>{{include document="BudgetCode.BudgetService"/}}
+
+{{velocity}}
 #set($columns = ["name", "bank"])
 #set($columnsProperties = {
     "name" : { "link" : "view"}
@@ -35,6 +37,37 @@
 #livetable("transactions" $columns $columnsProperties $options)
 {{/velocity}}
 
-= Add new account
+= Add new account =
 
-# TODO</content></xwikidoc>
+{{velocity}}
+{{html}}
+&lt;form action="$xwiki.getDocument("BudgetCode.CreateAccount").getURL()" id="newproject"&gt;
+  &lt;div&gt;
+    &lt;input type="hidden" name="parent" value="$doc.fullName" /&gt;
+    &lt;input type="hidden" name="classname" value="BudgetCode.AccountClass" /&gt;
+    &lt;input type="hidden" name="template" value="BudgetCode.AccountClassTemplate" /&gt;
+    &lt;input type="hidden" name="xaction" value="create"/&gt;
+    &lt;input type="text" name="account" value="" size="30"/&gt;
+    &lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" value="Add this account"/&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+{{/html}}
+{{/velocity}}
+
+= Stats =
+
+{{velocity}}
+#if ($context.action == 'view')
+  #set($transactions = $xwiki.queryManager.createQuery("select year(realdate.value)||'-'||month(realdate.value), sum(value.value) from BaseObject as obj, DateProperty as realdate, FloatProperty as value, IntegerProperty as internal where obj.className='BudgetCode.AccountTransactionClass' and obj.id=realdate.id.id and realdate.id.name='realdate' and obj.id=value.id.id and value.id.name='value' and obj.id=internal.id.id and internal.id.name='internal' and internal.value = 0 group by year(realdate.value),month(realdate.value),locate('-', str(value.value)) order by realdate.value", 'hql').execute())
+  #if ($transactions.size() &gt; 0)
+    #set($transactions = $budgetservice.resolveTable($transactions))
+    #set($size = $transactions.size() + 1)
+    {{chart type="bar" source="inline" params="range:B2-C$size;series:columns;" title="Category value"}}
+      |=date|=debit|=credit
+      #foreach($transaction in $transactions)
+        |$transaction.get(0)|$transaction.get(1)|$transaction.get(2)
+      #end
+    {{/chart}}
+  #end
+#end
+{{/velocity}}</content></xwikidoc>

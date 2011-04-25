@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>BudgetCode</web>
+<name>AccountEdit</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>xwiki:XWiki.ThomasMortagne</creator>
+<author>xwiki:XWiki.ThomasMortagne</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
+<creationDate>1303643216000</creationDate>
+<date>1303646641000</date>
+<contentUpdateDate>1303646641000</contentUpdateDate>
+<version>1.4</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>true</minorEdit>
+<syntaxId>xwiki/2.0</syntaxId>
+<hidden>false</hidden>
+<content>{{include document="BudgetCode.AccountContext"/}}
+
+{{velocity}}
+#if ($accountObject)
+  Name: $accountObject.get('name')
+  Bank: $accountObject.bank
+#else
+  {{warning}}No //BudgetCode.AccountClass// object found.{{/warning}} 
+#end
+{{/velocity}}</content></xwikidoc>

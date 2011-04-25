@@ -11,9 +11,9 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303475796000</creationDate>
-<date>1303565438000</date>
-<contentUpdateDate>1303565438000</contentUpdateDate>
-<version>3.6</version>
+<date>1303671118000</date>
+<contentUpdateDate>1303671118000</contentUpdateDate>
+<version>6.7</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -46,7 +46,7 @@
 <separator> </separator>
 <separators></separators>
 <size>1</size>
-<sort>none</sort>
+<sort>id</sort>
 <sql></sql>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
@@ -68,6 +68,19 @@
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </description>
+<internal>
+<defaultValue>0</defaultValue>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType></displayType>
+<name>internal</name>
+<number>5</number>
+<prettyName>internal</prettyName>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</internal>
 <name>
 <disabled>0</disabled>
 <name>name</name>
@@ -80,6 +93,18 @@
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </name>
+<parent>
+<disabled>0</disabled>
+<name>parent</name>
+<number>6</number>
+<picker>0</picker>
+<prettyName>parent</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</parent>
 <pattern>
 <disabled>0</disabled>
 <name>pattern</name>
@@ -93,6 +118,34 @@
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </pattern>
 </class>
+<object>
+<class>
+<name>XWiki.SheetClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<defaultEditMode>
+<disabled>0</disabled>
+<name>defaultEditMode</name>
+<number>1</number>
+<prettyName>Default Edit Mode</prettyName>
+<size>15</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</defaultEditMode>
+</class>
+<name>BudgetCode.AccountTransactionFilterClass</name>
+<number>0</number>
+<className>XWiki.SheetClass</className>
+<guid>1651d823-a6ba-43b5-aa2a-3f7696b1b24a</guid>
+<property>
+<defaultEditMode></defaultEditMode>
+</property>
+</object>
 <content>{{velocity output="false"}}
 #set($filter = $doc.getObject("BudgetCode.AccountTransactionFilterClass"))
 {{/velocity}}
@@ -103,8 +156,14 @@
   Descrition: $filter.description
   Pattern: $filter.pattern
   Category: $filter.category
+  Internal: $filter.internal
 #else
   {{warning}}No //BudgetCode.AccountTransactionFilterClass// object found.{{/warning}} 
 #end
 {{/velocity}}
-</content></xwikidoc>
+
+{{velocity}}
+#if ($context.action == 'view')
+  {{include document="BudgetCode.AccountFilterView"/}}
+#end
+{{/velocity}}</content></xwikidoc>

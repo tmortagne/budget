@@ -11,9 +11,9 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303223069000</creationDate>
-<date>1303562397000</date>
-<contentUpdateDate>1303562397000</contentUpdateDate>
-<version>9.6</version>
+<date>1303671161000</date>
+<contentUpdateDate>1303671161000</contentUpdateDate>
+<version>9.13</version>
 <title>Account transaction sheet page</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -51,14 +51,14 @@
 <idField>name</idField>
 <multiSelect>0</multiSelect>
 <name>category</name>
-<number>9</number>
+<number>8</number>
 <picker>0</picker>
 <prettyName>category</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
 <separators></separators>
 <size>1</size>
-<sort>none</sort>
+<sort>id</sort>
 <sql></sql>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
@@ -66,6 +66,19 @@
 <valueField></valueField>
 <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
 </category>
+<categoryauto>
+<defaultValue>1</defaultValue>
+<disabled>0</disabled>
+<displayFormType>checkbox</displayFormType>
+<displayType></displayType>
+<name>categoryauto</name>
+<number>9</number>
+<prettyName>categoryauto</prettyName>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</categoryauto>
 <date>
 <dateFormat>dd/MM/yyyy</dateFormat>
 <disabled>0</disabled>
@@ -104,6 +117,19 @@
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </id>
+<internal>
+<defaultValue>0</defaultValue>
+<disabled>0</disabled>
+<displayFormType>checkbox</displayFormType>
+<displayType></displayType>
+<name>internal</name>
+<number>11</number>
+<prettyName>internal</prettyName>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</internal>
 <realdate>
 <dateFormat>dd/MM/yyyy</dateFormat>
 <disabled>0</disabled>
@@ -121,7 +147,7 @@
 <total>
 <disabled>0</disabled>
 <name>total</name>
-<number>9</number>
+<number>7</number>
 <numberType>long</numberType>
 <prettyName>total</prettyName>
 <size>30</size>
@@ -136,7 +162,7 @@
 <displayType>select</displayType>
 <multiSelect>0</multiSelect>
 <name>type</name>
-<number>8</number>
+<number>6</number>
 <picker>0</picker>
 <prettyName>type</prettyName>
 <relationalStorage>0</relationalStorage>
@@ -201,6 +227,8 @@
   Real date: $transaction.realdate
   Description: $transaction.description
   Category: $transaction.category
+  Automatic category: $transaction.categoryauto
+  Internal: $transaction.internal
 #else
   {{warning}}No //BudgetCode.AccountTransactionClass// object found.{{/warning}} 
 #end

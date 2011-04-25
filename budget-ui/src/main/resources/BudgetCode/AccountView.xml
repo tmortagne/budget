@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>BudgetCode</web>
+<name>AccountView</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>xwiki:XWiki.ThomasMortagne</creator>
+<author>xwiki:XWiki.ThomasMortagne</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
+<creationDate>1303643200000</creationDate>
+<date>1303670218000</date>
+<contentUpdateDate>1303670218000</contentUpdateDate>
+<version>1.11</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>true</minorEdit>
+<syntaxId>xwiki/2.0</syntaxId>
+<hidden>false</hidden>
+<content>{{include document="BudgetCode.BudgetService"/}}
+
+{{include document="BudgetCode.AccountContext"/}}
+
+= Transactions =
+
+{{velocity}}
+#set($columns = ["description", "type", "category", "date", "realdate", "value"])
+#set($columnsProperties = {
+    "description" : { "link" : "view", "filterable" : "true"},
+    "value" : { "link" : "view"}
+})
+#set($options = {
+   "resultPage":"BudgetCode.AccountTransactionsJSON",
+   "extraParams" : "account=${doc.space}",
+   "translationPrefix" : "budget.accounttransaction.",
+   "rowCount": 50
+})
+#livetable("transactions" $columns $columnsProperties $options)
+{{/velocity}}
+
+= Import transations =
+
+{{velocity}}
+#if ($request.action == 'import' &amp;&amp; $request.filename)
+  $budgetservice.importAttachment($request.filename, 'lcl', $accountId)
+
+  **TODO**: delete attachment
+#end
+{{/velocity}}
+
+== Available resource files ==
+
+{{velocity}}
+#foreach($attachment in $doc.attachmentList)
+  * $attachment.filename ~[[[import&gt;&gt;?action=import&amp;filename=$escapetool.url($attachment.filename)]]~] [{{html}}&lt;a href="$doc.getAttachmentURL($attachment.filename, 'delattachment', "xredirect=${doc.getURL()}")"&gt;delete&lt;/a&gt;{{/html}}]
+#end
+{{/velocity}}</content></xwikidoc>

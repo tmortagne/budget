@@ -47,7 +47,7 @@
 <separator> </separator>
 <separators></separators>
 <size>1</size>
-<sort>none</sort>
+<sort>id</sort>
 <sql></sql>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
@@ -69,6 +69,19 @@
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </description>
+<internal>
+<defaultValue>0</defaultValue>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType></displayType>
+<name>internal</name>
+<number>5</number>
+<prettyName>internal</prettyName>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</internal>
 <name>
 <disabled>0</disabled>
 <name>name</name>
@@ -81,6 +94,18 @@
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </name>
+<parent>
+<disabled>0</disabled>
+<name>parent</name>
+<number>6</number>
+<picker>0</picker>
+<prettyName>parent</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</parent>
 <pattern>
 <disabled>0</disabled>
 <name>pattern</name>

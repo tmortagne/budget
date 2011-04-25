@@ -11,9 +11,9 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303318305000</creationDate>
-<date>1303484676000</date>
-<contentUpdateDate>1303484676000</contentUpdateDate>
-<version>9.15</version>
+<date>1303738553000</date>
+<contentUpdateDate>1303738553000</contentUpdateDate>
+<version>9.66</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -23,11 +23,14 @@
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
 <content>{{groovy}}
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.apache.bcel.generic.ARRAYLENGTH;
+import org.apache.commons.lang.StringUtils;
 import org.mortagne.budget.transation.Transaction;
 import org.mortagne.budget.transation.io.TransactionReader;
 import org.mortagne.budget.transation.io.TransactionReaderConfiguration;
@@ -50,7 +53,7 @@ class BudgetService
 {
     private XWikiContext context;
 
-    private Map&lt;String, String&gt; filters;
+    private Map&lt;String, Filter&gt; filters;
 
     public BudgetService(XWikiContext context)
     {
@@ -62,23 +65,28 @@ class BudgetService
         return "Account" + account;
     }
 
-    public Map&lt;String, String&gt; getFilters() throws QueryException
+    public DocumentReference getTransactionClassReference()
+    {
+        return new DocumentReference(this.context.getDatabase(), "BudgetCode", "AccountTransactionClass");
+    }
+
+    public Map&lt;String, Filter&gt; getFilters() throws QueryException
     {
         if (this.filters == null) {
-            this.filters = new HashMap&lt;String, String&gt;();
+            this.filters = new HashMap&lt;String, Filter&gt;();
 
             QueryManager queryManager = Utils.getComponent(QueryManager.class);
 
             Query query =
                 queryManager
                     .createQuery(
-                        "select filter.pattern, filter.category from Document doc, doc.object(BudgetCode.AccountTransactionFilterClass) as filter",
+                        "select doc.fullName, filter.pattern, filter.category, filter.internal from Document doc, doc.object(BudgetCode.AccountTransactionFilterClass) as filter",
                         Query.XWQL);
 
             List&lt;Object[]&gt; filtersDatas = query.execute();
 
             for (Object[] filterDatas in filtersDatas) {
-                this.filters.put((String) filterDatas[0], (String) filterDatas[1]);
+                this.filters.put((String) filterDatas[0], new  Filter((String)filterDatas[1], (String)filterDatas[2], (Integer)filterDatas[3]));
             }
         }
 
@@ -87,16 +95,27 @@ class BudgetService
 
     private String getCategory(String description)
     {
-        Map&lt;String, String&gt; filters;
+        Filter filter = getMatchingFilter(description);
+
+        if (filter != null) {
+            return filter.category;
+        }
+
+        return null;
+    }
+
+    private Filter getMatchingFilter(String description)
+    {
+        Map&lt;String, Filter&gt; filters;
         try {
             filters = getFilters();
         } catch (QueryException e) {
             return null;
         }
 
-        for (Map.Entry&lt;String, String&gt; entry in filters.entrySet()) {
-            if (Pattern.matches(entry.getKey(), description)) {
-                return entry.getValue();
+        for (Filter filter in filters.values()) {
+            if (Pattern.matches(filter.pattern, description)) {
+                return filter;
             }
         }
 
@@ -129,10 +148,14 @@ class BudgetService
         }
     }
 
+    public DocumentReference getAccountTransactionTemplateReference() throws XWikiException
+    {
+        return new DocumentReference(this.context.getDatabase(), "BudgetCode", "AccountTransactionClassTemplate");
+    }
+
     public XWikiDocument getAccountTransactionTemplate() throws XWikiException
     {
-        return this.context.getWiki().getDocument(
-            new DocumentReference(context.getDatabase(), "BudgetCode", "AccountTransactionClassTemplate"), context);
+        return this.context.getWiki().getDocument(getAccountTransactionTemplateReference(), this.context);
     }
 
     public DocumentReference registerTransation(Transaction transaction, String account, boolean force)
@@ -142,21 +165,17 @@ class BudgetService
             this.context.getWiki().getDocument(
                 getTransactionDocument(this.context.getDatabase(), account, transaction), this.context);
 
-        //if (force || document.isNew()) {
+        if (force || document.isNew()) {
             XWikiDocument template = getAccountTransactionTemplate();
 
             if (!template.isNew()) {
+                document.readFromTemplate(template.getDocumentReference(), this.context);
                 document.setTitle(template.getTitle());
-                document.setContent(template.getContent());
-                document.setSyntax(template.getSyntax());
-                document.mergeXObjects(template);
             }
 
             document.setParentReference(new EntityReference("WebHome", EntityType.DOCUMENT));
 
-            BaseObject xtransaction =
-                document.getXObject(new DocumentReference(this.context.getDatabase(), "BudgetCode",
-                    "AccountTransactionClass"), true, this.context);
+            BaseObject xtransaction = document.getXObject(getTransactionClassReference(), true, this.context);
 
             xtransaction.setStringValue("account", account);
             xtransaction.setStringValue("description", transaction.getDescription());
@@ -165,16 +184,136 @@ class BudgetService
             xtransaction.setDateValue("realdate", transaction.getRealDate() != null ? transaction.getRealDate()
                 : transaction.getDate());
             xtransaction.setFloatValue("value", transaction.getValue());
+            xtransaction.setIntValue("categoryauto", 1);
 
-            xtransaction.setStringValue("category", getCategory(transaction.getDescription()));
+            if (transaction.getDescription() != null) {
+                Filter filter = getMatchingFilter(transaction.getDescription());
+                xtransaction.setStringValue("category", filter.category);
+                xtransaction.setIntValue("internal", filter.internal ? 1 : 0);
+            } else {
+                xtransaction.setIntValue("internal", 0);
+            }
 
             this.context.getWiki().saveDocument(document, this.context);
-        //}
+        }
 
         return document.getDocumentReference();
     }
-}
 
+    public int applyFilter(String filterId) throws QueryException, XWikiException
+    {
+        Filter filter = getFilters().get(filterId);
+
+        QueryManager queryManager = Utils.getComponent(QueryManager.class);
+
+        Query query =
+            queryManager.createQuery(
+                "select doc.space, doc.name, transaction.description"
+                    + " from Document doc, doc.object(BudgetCode.AccountTransactionClass) as transaction"
+                    + " where doc.name &lt;&gt; 'AccountTransactionClassTemplate'"
+                    + " and (transaction.category is null or transaction.category &lt;&gt; :category)"
+                    + " and (transaction.categoryauto is null or transaction.categoryauto = 1)"
+                    , Query.XWQL).bindValue(
+                "category", filter.category);
+
+        List&lt;Object[]&gt; transactionsDatas = query.execute();
+
+        int nb = 0;
+        Pattern pattern = Pattern.compile(filter.pattern);
+        for (Object[] transactionDatas in transactionsDatas) {
+            if (!StringUtils.isEmpty((String) transactionDatas[2])
+                &amp;&amp; pattern.matcher((String) transactionDatas[2]).matches()) {
+                XWikiDocument transactionDocument =
+                    this.context.getWiki().getDocument(
+                        new DocumentReference(this.context.getDatabase(), (String) transactionDatas[0],
+                            (String) transactionDatas[1]), context);
+
+                DocumentReference transactionClassReference = getTransactionClassReference();
+                transactionDocument.setStringValue(getTransactionClassReference(), "category", filter.category);
+                transactionDocument.setIntValue(transactionClassReference, "internal", filter.internal ? 1 : 0);
+
+                this.context.getWiki().saveDocument(transactionDocument, context);
+
+                ++nb;
+            }
+        }
+
+        return nb;
+    }
+
+    public List&lt;List&lt;Object&gt;&gt; resolveTable(List&lt;Object[]&gt; datas)
+    {
+        List&lt;List&lt;Object&gt;&gt; table = new ArrayList&lt;List&lt;Object&gt;&gt;();
+
+        List&lt;Object&gt; currentRow = null;
+        String previousDate = null;
+        Float savedValue = null;
+        boolean negatifFound = false;
+        for (Object[] data : datas) {
+            String date = (String) data[0];
+            float value = (Float) data[1];
+            if (!date.equals(previousDate)) {
+                if (savedValue != null) {
+                    table.add(currentRow = [previousDate, 0, savedValue]);
+                    savedValue = null;
+                }
+                if (negatifFound) {
+                    currentRow[2] = 0;
+                }
+                negatifFound = false;
+            }
+            float positiveValue = value;
+            if (positiveValue &lt; 0) {
+                positiveValue = positiveValue * -1;
+                if (savedValue != null) {
+                    table.add(currentRow = [date, positiveValue, savedValue]);
+                    savedValue = null;
+                    negatifFound = false;
+                } else {
+                    if (negatifFound) {
+                        currentRow[2] = 0;
+                    }
+                    table.add(currentRow = [date, positiveValue, 0]);
+                    negatifFound = true;
+                }
+            } else {
+                if (negatifFound) {
+                    currentRow[2] = positiveValue;
+                    negatifFound = false;
+                } else {
+                    savedValue = positiveValue;
+                }
+            }
+            previousDate = date;
+        }
+        if (savedValue != null) {
+            table.add(currentRow = [previousDate, 0, savedValue]);
+        }
+
+        return table;
+    }
+
+    public static class Filter
+    {
+        public String pattern;
+
+        public String category;
+
+        public boolean internal;
+
+        public Filter(String pattern, String category, Integer internal)
+        {
+            this(pattern, category, internal == Integer.valueOf(1));
+        }
+
+        public Filter(String pattern, String category, boolean internal)
+        {
+            this.pattern = pattern;
+            this.category = category;
+            this.internal = internal;
+        }
+    }
+}
 
 if (xcontext.get("budgetservice") == null) {
   xcontext.put("budgetservice", new BudgetService(xcontext.context))
