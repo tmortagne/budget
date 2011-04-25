@@ -25,3 +25,6 @@ nbproject
 *.log
 .sonar-ide.properties
 .clover
+
+# budget specific
+BudgetService.java
