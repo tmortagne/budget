@@ -1,4 +1,4 @@
-package org.mortagne.budget.transation;
+package org.mortagne.budget.transaction;
 
 import java.util.Date;
 

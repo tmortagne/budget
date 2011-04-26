@@ -1,14 +1,14 @@
-package org.mortagne.budget.internal.transation.io.lcl.qif;
+package org.mortagne.budget.internal.transaction.io.lcl.qif;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 
 import org.apache.commons.lang.StringUtils;
-import org.mortagne.budget.internal.transation.io.qif.QIFTransactionReader;
-import org.mortagne.budget.transation.DefaultTransaction;
-import org.mortagne.budget.transation.Transaction;
-import org.mortagne.budget.transation.io.TransactionReaderConfiguration;
+import org.mortagne.budget.internal.transaction.io.qif.QIFTransactionReader;
+import org.mortagne.budget.transaction.DefaultTransaction;
+import org.mortagne.budget.transaction.Transaction;
+import org.mortagne.budget.transaction.io.TransactionReaderConfiguration;
 
 public class LCLQIFTransactionReader extends QIFTransactionReader
 {

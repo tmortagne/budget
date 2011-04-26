@@ -1,9 +1,9 @@
-package org.mortagne.budget.transation.io;
+package org.mortagne.budget.transaction.io;
 
 import java.io.IOException;
 import java.text.ParseException;
 
-import org.mortagne.budget.transation.Transaction;
+import org.mortagne.budget.transaction.Transaction;
 
 public interface TransactionReader
 {

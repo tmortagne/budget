@@ -1,10 +1,10 @@
-package org.mortagne.budget.internal.transation.io.qif;
+package org.mortagne.budget.internal.transaction.io.qif;
 
 import java.io.InputStream;
 
-import org.mortagne.budget.transation.io.TransactionReader;
-import org.mortagne.budget.transation.io.TransactionReaderConfiguration;
-import org.mortagne.budget.transation.io.TransactionReaderFactory;
+import org.mortagne.budget.transaction.io.TransactionReader;
+import org.mortagne.budget.transaction.io.TransactionReaderConfiguration;
+import org.mortagne.budget.transaction.io.TransactionReaderFactory;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.logging.AbstractLogEnabled;
 

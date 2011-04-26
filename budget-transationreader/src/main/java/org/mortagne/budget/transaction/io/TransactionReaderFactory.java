@@ -1,4 +1,4 @@
-package org.mortagne.budget.transation.io;
+package org.mortagne.budget.transaction.io;
 
 import java.io.InputStream;
 

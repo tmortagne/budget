@@ -1,14 +1,14 @@
-package org.mortagne.budget.internal.transation.io.lcl.pdf;
+package org.mortagne.budget.internal.transaction.io.lcl.pdf;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.util.Iterator;
 
-import org.mortagne.budget.transation.DefaultTransaction;
-import org.mortagne.budget.transation.Transaction;
-import org.mortagne.budget.transation.io.TransactionReader;
-import org.mortagne.budget.transation.io.TransactionReaderConfiguration;
+import org.mortagne.budget.transaction.DefaultTransaction;
+import org.mortagne.budget.transaction.Transaction;
+import org.mortagne.budget.transaction.io.TransactionReader;
+import org.mortagne.budget.transaction.io.TransactionReaderConfiguration;
 import org.xwiki.component.logging.AbstractLogEnabled;
 
 import com.itextpdf.text.pdf.PdfReader;

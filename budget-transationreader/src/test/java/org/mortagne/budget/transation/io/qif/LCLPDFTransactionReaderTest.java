@@ -8,10 +8,10 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mortagne.budget.transation.Transaction;
-import org.mortagne.budget.transation.io.TransactionReader;
-import org.mortagne.budget.transation.io.TransactionReaderConfiguration;
-import org.mortagne.budget.transation.io.TransactionReaderFactory;
+import org.mortagne.budget.transaction.Transaction;
+import org.mortagne.budget.transaction.io.TransactionReader;
+import org.mortagne.budget.transaction.io.TransactionReaderConfiguration;
+import org.mortagne.budget.transaction.io.TransactionReaderFactory;
 import org.xwiki.test.AbstractComponentTestCase;
 
 public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase

@@ -1,4 +1,4 @@
-package org.mortagne.budget.internal.transation.io.lcl.pdf;
+package org.mortagne.budget.internal.transaction.io.lcl.pdf;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.mortagne.budget.transation.DefaultTransaction;
+import org.mortagne.budget.transaction.DefaultTransaction;
 
 import com.itextpdf.text.pdf.parser.ImageRenderInfo;
 import com.itextpdf.text.pdf.parser.LineSegment;

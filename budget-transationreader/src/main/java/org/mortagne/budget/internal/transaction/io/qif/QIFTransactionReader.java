@@ -1,4 +1,4 @@
-package org.mortagne.budget.internal.transation.io.qif;
+package org.mortagne.budget.internal.transaction.io.qif;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,10 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 
-import org.mortagne.budget.transation.DefaultTransaction;
-import org.mortagne.budget.transation.Transaction;
-import org.mortagne.budget.transation.io.TransactionReader;
-import org.mortagne.budget.transation.io.TransactionReaderConfiguration;
+import org.mortagne.budget.transaction.DefaultTransaction;
+import org.mortagne.budget.transaction.Transaction;
+import org.mortagne.budget.transaction.io.TransactionReader;
+import org.mortagne.budget.transaction.io.TransactionReaderConfiguration;
 import org.xwiki.component.logging.AbstractLogEnabled;
 
 public class QIFTransactionReader extends AbstractLogEnabled implements TransactionReader
