@@ -59,7 +59,7 @@ MSAgCkwKXgo=
 
 = Transactions
 
-# **TODO**: list transations
+# **TODO**: list transactions
 
 {{velocity}}
 #set($columns = ["description", "type", "date", "realdate", "value"])
@@ -75,11 +75,11 @@ MSAgCkwKXgo=
 #livetable("transactions" $columns $columnsProperties $options)
 {{/velocity}}
 
-= Import transations
+= Import transactions
 
 {{velocity}}
 #if ($request.action == 'import' &amp;&amp; $request.filename)
-  $budgetservice.importAttachment($request.filename, 'lcl', 'test')
+  $budgetservice.importAttachment($request.filename, 'lcl.qif', 'test')
 
   **TODO**: delete attachment
 #end

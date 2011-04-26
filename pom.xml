@@ -266,7 +266,7 @@
     </pluginManagement>
   </build>
   <modules>
-    <module>budget-transationreader</module>
+    <module>budget-transactionreader</module>
     <!--<module>budget-ui</module>-->
   </modules>
   <repositories>
