@@ -8,8 +8,8 @@
 		<artifactId>budget</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>budget-transationreader</artifactId>
-	<name>Budget - Transation reader</name>
+	<artifactId>budget-transactionreader</artifactId>
+	<name>Budget - Transaction reader</name>
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
