@@ -11,25 +11,25 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303318305000</creationDate>
-<date>1303738553000</date>
-<contentUpdateDate>1303738553000</contentUpdateDate>
-<version>9.66</version>
+<date>1303919486000</date>
+<contentUpdateDate>1303919486000</contentUpdateDate>
+<version>10.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
-<minorEdit>true</minorEdit>
+<minorEdit>false</minorEdit>
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
 <content>{{groovy}}
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.apache.bcel.generic.ARRAYLENGTH;
 import org.apache.commons.lang.StringUtils;
 import org.mortagne.budget.transaction.Transaction;
 import org.mortagne.budget.transaction.io.TransactionReader;
@@ -85,15 +85,16 @@ class BudgetService
 
             List&lt;Object[]&gt; filtersDatas = query.execute();
 
-            for (Object[] filterDatas in filtersDatas) {
-                this.filters.put((String) filterDatas[0], new  Filter((String)filterDatas[1], (String)filterDatas[2], (Integer)filterDatas[3]));
+            for (Object[] filterDatas : filtersDatas) {
+                this.filters.put((String) filterDatas[0], new Filter((String) filterDatas[1], (String) filterDatas[2],
+                    (Integer) filterDatas[3]));
             }
         }
 
         return this.filters;
     }
 
-    private String getCategory(String description)
+    public String getCategory(String description)
     {
         Filter filter = getMatchingFilter(description);
 
@@ -113,7 +114,7 @@ class BudgetService
             return null;
         }
 
-        for (Filter filter in filters.values()) {
+        for (Filter filter : filters.values()) {
             if (Pattern.matches(filter.pattern, description)) {
                 return filter;
             }
@@ -144,7 +145,7 @@ class BudgetService
             readerFactory.createTransactionReader(attachment.getContentInputStream(this.context), configuration);
 
         for (Transaction transaction = reader.next(); transaction != null; transaction = reader.next()) {
-            registertransaction(transaction, account, false);
+            registerTransation(transaction, account, false);
         }
     }
 
@@ -158,7 +159,7 @@ class BudgetService
         return this.context.getWiki().getDocument(getAccountTransactionTemplateReference(), this.context);
     }
 
-    public DocumentReference registertransaction(Transaction transaction, String account, boolean force)
+    public DocumentReference registerTransation(Transaction transaction, String account, boolean force)
         throws XWikiException
     {
         XWikiDocument document =
@@ -212,15 +213,14 @@ class BudgetService
                     + " from Document doc, doc.object(BudgetCode.AccountTransactionClass) as transaction"
                     + " where doc.name &lt;&gt; 'AccountTransactionClassTemplate'"
                     + " and (transaction.category is null or transaction.category &lt;&gt; :category)"
-                    + " and (transaction.categoryauto is null or transaction.categoryauto = 1)"
-                    , Query.XWQL).bindValue(
+                    + " and (transaction.categoryauto is null or transaction.categoryauto = 1)", Query.XWQL).bindValue(
                 "category", filter.category);
 
         List&lt;Object[]&gt; transactionsDatas = query.execute();
 
         int nb = 0;
         Pattern pattern = Pattern.compile(filter.pattern);
-        for (Object[] transactionDatas in transactionsDatas) {
+        for (Object[] transactionDatas : transactionsDatas) {
             if (!StringUtils.isEmpty((String) transactionDatas[2])
                 &amp;&amp; pattern.matcher((String) transactionDatas[2]).matches()) {
                 XWikiDocument transactionDocument =
@@ -254,11 +254,11 @@ class BudgetService
             float value = (Float) data[1];
             if (!date.equals(previousDate)) {
                 if (savedValue != null) {
-                    table.add(currentRow = [previousDate, 0, savedValue]);
+                    table.add(currentRow = Arrays.&lt;Object&gt; asList(previousDate, 0, savedValue));
                     savedValue = null;
                 }
                 if (negatifFound) {
-                    currentRow[2] = 0;
+                    currentRow.set(2, 0);
                 }
                 negatifFound = false;
             }
@@ -266,19 +266,19 @@ class BudgetService
             if (positiveValue &lt; 0) {
                 positiveValue = positiveValue * -1;
                 if (savedValue != null) {
-                    table.add(currentRow = [date, positiveValue, savedValue]);
+                    table.add(currentRow = Arrays.&lt;Object&gt; asList(date, positiveValue, savedValue));
                     savedValue = null;
                     negatifFound = false;
                 } else {
                     if (negatifFound) {
-                        currentRow[2] = 0;
+                        currentRow.set(2, 0);
                     }
-                    table.add(currentRow = [date, positiveValue, 0]);
+                    table.add(currentRow = Arrays.&lt;Object&gt; asList(date, positiveValue, 0));
                     negatifFound = true;
                 }
             } else {
                 if (negatifFound) {
-                    currentRow[2] = positiveValue;
+                    currentRow.set(2, positiveValue);
                     negatifFound = false;
                 } else {
                     savedValue = positiveValue;
@@ -287,7 +287,7 @@ class BudgetService
             previousDate = date;
         }
         if (savedValue != null) {
-            table.add(currentRow = [previousDate, 0, savedValue]);
+            table.add(currentRow = Arrays.&lt;Object&gt; asList(previousDate, 0, savedValue));
         }
 
         return table;
