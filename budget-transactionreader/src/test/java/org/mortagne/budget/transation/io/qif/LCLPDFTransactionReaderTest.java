@@ -1,6 +1,23 @@
+/*
+ * Copyright (c) 2011, Thomas Mortagne. All rights reserved.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
 package org.mortagne.budget.transation.io.qif;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -42,7 +59,7 @@ public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
         Assert.assertEquals(500f, transaction.getValue());
         Assert.assertEquals(DATEFORMAT.parse("09.10.09"), transaction.getDate());
         Assert.assertEquals(DATEFORMAT.parse("09.10.09"), transaction.getRealDate());
-        // Assert.assertEquals("Carte", transaction.getType());
+        Assert.assertEquals("Carte", transaction.getType());
         Assert.assertEquals("VIREMENT CHAMBON", transaction.getDescription());
 
         transaction = this.reader.next();
@@ -52,7 +69,7 @@ public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
         Assert.assertEquals(-35.87f, transaction.getValue());
         Assert.assertEquals(DATEFORMAT.parse("12.10.09"), transaction.getDate());
         Assert.assertEquals(DATEFORMAT.parse("12.10.09"), transaction.getRealDate());
-        // Assert.assertEquals("Pr\u00e9l\u00e8vement", transaction.getType());
+       Assert.assertEquals("Pr\u00e9l\u00e8vement", transaction.getType());
         Assert.assertEquals("PRLV DEDIBOX SAS", transaction.getDescription());
 
         for (Transaction t = reader.next(); transaction != null; transaction = reader.next()) {
