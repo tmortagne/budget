@@ -110,7 +110,7 @@ public class QIFTransactionReader extends AbstractLogEnabled implements Transact
                     transaction.setType(value);
                     break;
                 case 'T':
-                    transaction.setValue(Float.valueOf(value));
+                    transaction.setValue(Double.valueOf(value));
                     break;
                 default:
                     break;

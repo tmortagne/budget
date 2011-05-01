@@ -56,7 +56,7 @@ public class LCLQIFTransactionReaderTest extends AbstractComponentTestCase
 
         Assert.assertNotNull(transaction);
 
-        Assert.assertEquals(-66.50F, transaction.getValue());
+        Assert.assertEquals(-66.50d, transaction.getValue());
         Assert.assertEquals(DATEFORMAT.parse("11.04.11"), transaction.getDate());
         Assert.assertEquals(DATEFORMAT.parse("09.04.11"), transaction.getRealDate());
         Assert.assertEquals("Carte", transaction.getType());
@@ -66,7 +66,7 @@ public class LCLQIFTransactionReaderTest extends AbstractComponentTestCase
 
         Assert.assertNotNull(transaction);
 
-        Assert.assertEquals(-35.31F, transaction.getValue());
+        Assert.assertEquals(-35.31d, transaction.getValue());
         Assert.assertEquals(DATEFORMAT.parse("12.04.11"), transaction.getDate());
         Assert.assertNull(transaction.getRealDate());
         Assert.assertEquals("Pr\u00e9l\u00e8vement", transaction.getType());

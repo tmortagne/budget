@@ -25,6 +25,8 @@ import org.xwiki.component.annotation.ComponentRole;
 @ComponentRole
 public interface TransactionReaderFactory
 {
+    String getId();
+    
     String getName();
 
     String getDescription();

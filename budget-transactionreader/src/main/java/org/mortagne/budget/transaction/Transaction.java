@@ -25,14 +25,16 @@ public interface Transaction
     String getId();
 
     String getDescription();
-    
+
     String getDetails();
 
     Date getDate();
 
     Date getRealDate();
 
-    float getValue();
+    double getValue();
+
+    double getTotal();
 
     String getType();
 }

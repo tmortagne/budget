@@ -22,12 +22,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
 import org.mortagne.budget.transaction.DefaultTransaction;
 
 import com.itextpdf.text.pdf.parser.ImageRenderInfo;
@@ -38,20 +38,47 @@ import com.itextpdf.text.pdf.parser.Vector;
 
 public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
 {
-    private static final List<String> TABLEHEADER = Arrays.asList("DATE", "LIBELLE", "VALEUR", "DEBIT", "CREDIT");
+    private static final String[] TABLEHEADER = {"DATE", "LIBELLE", "VALEUR", "DEBIT", "CREDIT"};
+
+    private static final float[] TABLECOLUMNS =
+        {40/* 42.5 */, 70/* 74.85 */, 350/* 365.65 */, 410/* 421.05 */, 480/* 493.25 */};
+
+    private static final float FTYPE = 85/* 89.85 */;
+
+    private static final float FDETAIL = 80/* 80.85 */;
 
     private static final DateFormat DATEFORMAT = new SimpleDateFormat("dd.MM.yy");
+
+    private static final DateFormat DESCRIPTIONDATEFORMAT = new SimpleDateFormat("dd/MM/yy");
+
+    private static final Pattern DATEPATTERN = Pattern.compile("\\d\\d\\.\\d\\d");
+
+    private static final Pattern DESCRIPTIONDATEPATTERN = Pattern.compile(".*(\\d\\d/\\d\\d/\\d\\d).*");
+
+    private static final Pattern DESCRIPTIONDATEPATTERN2 = Pattern.compile(".*(\\d\\d/\\d\\d).*");
 
     /** a summary of all found text */
     private final List<TextChunk> locationalResult = new ArrayList<TextChunk>();
 
     private List<DefaultTransaction> transactions;
 
-    /**
-     * Creates a new text extraction renderer.
-     */
-    public LCLLocationTextExtractionStrategy()
+    private double previousTotal;
+
+    private String lastType;
+
+    public LCLLocationTextExtractionStrategy(String lastType)
     {
+        this.lastType = lastType;
+    }
+
+    public double getPreviousTotal()
+    {
+        return this.previousTotal;
+    }
+
+    public String getLastType()
+    {
+        return lastType;
     }
 
     public List<DefaultTransaction> getTransactions()
@@ -69,10 +96,10 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
             String previousDate = null;
             for (TextChunk chunk : this.locationalResult) {
                 if (!inTable) {
-                    if (TABLEHEADER.get(tableheaderindex).equals(chunk.text)) {
+                    if (TABLEHEADER[tableheaderindex].equals(chunk.text)) {
                         ++tableheaderindex;
-                        
-                        if (tableheaderindex == TABLEHEADER.size()) {
+
+                        if (tableheaderindex == TABLEHEADER.length) {
                             inTable = true;
                             tableheaderindex = 0;
                         }
@@ -81,61 +108,73 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
                     }
                 } else if (chunk.text.equals("SOIT EN  FRANCS")) {
                     break;
+                } else if (lastChunk != null && lastChunk.text.trim().equals("ANCIEN SOLDE")) {
+                    this.previousTotal = parseValue(chunk.text);
                 } else {
-                    if (lastChunk == null) {
-                        if (chunk.text.matches("\\d\\d\\.\\d\\d")) {
-                            this.transactions.add(currentTransaction = new DefaultTransaction());
-                            previousDate = chunk.text.trim();
-                            tableheaderindex = 1;
-                        } else {
-                            // TODO: throw exception
-                        }
-                    } else {
-                        if (chunk.sameLine(lastChunk)) {
-                            if (tableheaderindex == 1) {
-                                currentTransaction.setDescription(chunk.text.trim());
-                                ++tableheaderindex;
-                            } else if (tableheaderindex == 2) {
-                                try {
-                                    Date realDate = DATEFORMAT.parse(chunk.text.trim());
-                                    currentTransaction.setRealDate(realDate);
+                    if (chunk.sameLine(lastChunk) && currentTransaction != null) {
+                        int index = TABLECOLUMNS.length - 1;
+                        for (; TABLECOLUMNS[index] > chunk.distParallelStart; --index)
+                            ;
 
-                                    Date date;
-                                    if ((realDate.getMonth() + 1) <= Integer.valueOf(StringUtils.substringAfterLast(
-                                        previousDate, "."))) {
-                                        date =
-                                            DATEFORMAT.parse(previousDate
-                                                + '.' + StringUtils.substringAfterLast(chunk.text, "."));
-                                    } else {
-                                        date =
-                                            DATEFORMAT
-                                                .parse(previousDate
-                                                    + (Integer.valueOf(StringUtils.substringAfterLast(chunk.text, ".")) + 1));
-                                    }
-                                    currentTransaction.setDate(date);
+                        if (index == 1) {
+                            String description = currentTransaction.getDescription();
+                            currentTransaction.setDescription(description == null ? chunk.text.trim() : description
+                                + " " + chunk.text.trim());
+                            ++tableheaderindex;
+
+                            Matcher matcher = DESCRIPTIONDATEPATTERN.matcher(chunk.text);
+                            if (matcher.matches()) {
+                                String realDate = matcher.group(1);
+
+                                try {
+                                    currentTransaction.setRealDate(DESCRIPTIONDATEFORMAT.parse(realDate));
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                ++tableheaderindex;
-                            } else if (tableheaderindex == 3) {
-                                currentTransaction.setValue(Float.valueOf(chunk.text.trim().replace(',', '.').replace(" ", "")));
+                            }
+                        } else if (index == 2) {
+                            try {
+                                // Bank date
+                                currentTransaction.setDate(DATEFORMAT.parse(chunk.text.trim()));
 
-                                if (chunk.distParallelStart < 450f) {
+                                // Real date
+                                if (currentTransaction.getRealDate() == null) {
+                                    currentTransaction.setRealDate(getRealDate(currentTransaction.getDate(),
+                                        previousDate, currentTransaction.getDescription()));
+                                }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            ++tableheaderindex;
+                        } else if (index >= 3) {
+                            if (!chunk.text.trim().equals(".")) {
+                                double value = parseValue(chunk.text);
+
+                                currentTransaction.setValue(value);
+                                if (chunk.distParallelStart < TABLECOLUMNS[4]) {
                                     currentTransaction.setValue(currentTransaction.getValue() * -1);
                                 }
-                                tableheaderindex = 0;
                             }
-                        } else {
-                            if (chunk.distParallelStart > 500) {
-                                break;
-                            }
+                        }
+                    } else {
+                        if (chunk.distParallelStart > 500) {
+                            break;
+                        }
 
-                            if (chunk.text.matches("\\d\\d\\.\\d\\d")) {
-                                this.transactions.add(currentTransaction = new DefaultTransaction());
-                                previousDate = chunk.text.trim();
-                                tableheaderindex = 1;
-                            } else if (this.transactions != null) {
-                                currentTransaction.setDetails(chunk.text.trim());
+                        if (DATEPATTERN.matcher(chunk.text.trim()).matches()) {
+                            this.transactions.add(currentTransaction = new DefaultTransaction());
+                            currentTransaction.setType(this.lastType);
+                            previousDate = chunk.text.trim();
+                            tableheaderindex = 1;
+                        } else {
+                            if (chunk.distParallelStart > 100) {
+                                // Do nothing
+                            } else if (chunk.distParallelStart > FTYPE) {
+                                this.lastType = chunk.text.trim();
+                            } else if (chunk.distParallelStart > FDETAIL) {
+                                String details = currentTransaction.getDetails();
+                                currentTransaction.setDetails(details == null ? chunk.text.trim() : details + "\n"
+                                    + chunk.text.trim());
                             }
                         }
                     }
@@ -146,6 +185,29 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
         }
 
         return this.transactions;
+    }
+
+    private Date getRealDate(Date bankDate, String previousDate, String description) throws ParseException
+    {
+        int bankDateMonth = bankDate.getMonth() + 1;
+        int bankDateYear = bankDate.getYear() + 1900;
+
+        String bankDateMonthString = String.valueOf(bankDateMonth);
+
+        Matcher matcher = DESCRIPTIONDATEPATTERN2.matcher(description);
+        if (matcher.matches()) {
+            String realDateString = matcher.group(1);
+            return DESCRIPTIONDATEFORMAT.parse(realDateString + '/'
+                + (realDateString.endsWith(bankDateMonthString) ? bankDateYear : (bankDateYear - 1)));
+        } else {
+            return DATEFORMAT.parse(previousDate + '.'
+                + (previousDate.endsWith(bankDateMonthString) ? bankDateYear : (bankDateYear + 1)));
+        }
+    }
+
+    private double parseValue(String value)
+    {
+        return Double.valueOf(value.trim().replace(',', '.').replace(" ", ""));
     }
 
     /**
@@ -196,12 +258,6 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
         /** the text of the chunk */
         final String text;
 
-        /** the starting location of the chunk */
-        final Vector startLocation;
-
-        /** the ending location of the chunk */
-        final Vector endLocation;
-
         /** unit vector in the orientation of the chunk */
         final Vector orientationVector;
 
@@ -220,21 +276,9 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
          */
         final float distParallelStart;
 
-        /**
-         * distance of the end of the chunk parallel to the orientation unit vector (i.e. the X position in an unrotated
-         * coordinate system)
-         */
-        final float distParallelEnd;
-
-        /** the width of a single space character in the font of the chunk */
-        final float charSpaceWidth;
-
         public TextChunk(String string, Vector startLocation, Vector endLocation, float charSpaceWidth)
         {
             this.text = string;
-            this.startLocation = startLocation;
-            this.endLocation = endLocation;
-            this.charSpaceWidth = charSpaceWidth;
 
             this.orientationVector = endLocation.subtract(startLocation).normalize();
             this.orientationMagnitude =
@@ -248,7 +292,6 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
                 (int) (startLocation.subtract(origin)).cross(this.orientationVector).get(Vector.I3);
 
             this.distParallelStart = this.orientationVector.dot(startLocation);
-            this.distParallelEnd = this.orientationVector.dot(endLocation);
         }
 
         /**
@@ -266,19 +309,6 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
             }
 
             return true;
-        }
-
-        /**
-         * Computes the distance between the end of 'other' and the beginning of this chunk in the direction of this
-         * chunk's orientation vector. Note that it's a bad idea to call this for chunks that aren't on the same line
-         * and orientation, but we don't explicitly check for that condition for performance reasons.
-         * 
-         * @param other
-         * @return the number of spaces between the end of 'other' and the beginning of this chunk
-         */
-        public float distanceFromEndOf(TextChunk other)
-        {
-            return this.distParallelStart - other.distParallelEnd;
         }
 
         /**

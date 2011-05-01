@@ -56,24 +56,30 @@ public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
 
         Assert.assertNotNull(transaction);
 
-        Assert.assertEquals(500f, transaction.getValue());
-        Assert.assertEquals(DATEFORMAT.parse("09.10.09"), transaction.getDate());
-        Assert.assertEquals(DATEFORMAT.parse("09.10.09"), transaction.getRealDate());
-        Assert.assertEquals("Carte", transaction.getType());
-        Assert.assertEquals("VIREMENT CHAMBON", transaction.getDescription());
+        Assert.assertEquals(-33.25d, transaction.getValue());
+        Assert.assertEquals(11719.66d, transaction.getTotal());
+        Assert.assertEquals(DATEFORMAT.parse("08.10.09"), transaction.getDate());
+        Assert.assertEquals(DATEFORMAT.parse("07.10.09"), transaction.getRealDate());
+        Assert.assertEquals("PAIEMENTS PAR CARTE", transaction.getType());
+        Assert.assertEquals("CB BOUCHERIE LIMOUS 07/10/09", transaction.getDescription());
+        Assert.assertNull(transaction.getDetails());
 
+        transaction = this.reader.next();
+        transaction = this.reader.next();
         transaction = this.reader.next();
 
         Assert.assertNotNull(transaction);
 
-        Assert.assertEquals(-35.87f, transaction.getValue());
-        Assert.assertEquals(DATEFORMAT.parse("12.10.09"), transaction.getDate());
-        Assert.assertEquals(DATEFORMAT.parse("12.10.09"), transaction.getRealDate());
-       Assert.assertEquals("Pr\u00e9l\u00e8vement", transaction.getType());
-        Assert.assertEquals("PRLV DEDIBOX SAS", transaction.getDescription());
+        Assert.assertEquals(-814.27d, transaction.getValue());
+        Assert.assertEquals(10882.83d, transaction.getTotal());
+        Assert.assertEquals(DATEFORMAT.parse("08.10.09"), transaction.getDate());
+        Assert.assertEquals(DATEFORMAT.parse("08.10.09"), transaction.getRealDate());
+        Assert.assertEquals("OPERATIONS DIVERSES", transaction.getType());
+        Assert.assertEquals("PRLV ADOPT IMMO", transaction.getDescription());
+        Assert.assertEquals("PL19171 PRELT", transaction.getDetails());
 
-        for (Transaction t = reader.next(); transaction != null; transaction = reader.next()) {
-
+        for (transaction = reader.next(); transaction != null;) {
+            transaction = reader.next();
         }
 
         this.reader.close();

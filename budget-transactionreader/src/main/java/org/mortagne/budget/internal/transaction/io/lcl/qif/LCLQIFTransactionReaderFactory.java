@@ -22,23 +22,17 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.Locale;
 
+import org.mortagne.budget.transaction.io.AbstractTransactionReaderFactory;
 import org.mortagne.budget.transaction.io.TransactionReader;
 import org.mortagne.budget.transaction.io.TransactionReaderConfiguration;
-import org.mortagne.budget.transaction.io.TransactionReaderFactory;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.component.logging.AbstractLogEnabled;
 
 @Component("lcl.qif")
-public class LCLQIFTransactionReaderFactory extends AbstractLogEnabled implements TransactionReaderFactory
+public class LCLQIFTransactionReaderFactory extends AbstractTransactionReaderFactory
 {
-    public String getName()
+    public LCLQIFTransactionReaderFactory()
     {
-        return "LCL QIF";
-    }
-
-    public String getDescription()
-    {
-        return "LCL French QIF format";
+        super("lcl.qif", "LCL QIF", "LCL French QIF format");
     }
 
     public TransactionReader createTransactionReader(InputStream transationStream,
@@ -49,7 +43,7 @@ public class LCLQIFTransactionReaderFactory extends AbstractLogEnabled implement
 
         LCLQIFTransactionReader reader = new LCLQIFTransactionReader(transationStream, configuration);
         reader.enableLogging(getLogger());
-        
+
         return reader;
     }
 }

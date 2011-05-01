@@ -21,7 +21,11 @@ package org.mortagne.budget.internal.transaction.io.lcl.pdf;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import org.mortagne.budget.transaction.DefaultTransaction;
 import org.mortagne.budget.transaction.Transaction;
@@ -59,18 +63,57 @@ public class LCLPDFTransactionReader extends AbstractLogEnabled implements Trans
     {
         close();
 
-        // IText
-        LCLLocationTextExtractionStrategy textExtractionStrategy = new LCLLocationTextExtractionStrategy();
+        List<DefaultTransaction> transactions = new ArrayList<DefaultTransaction>();
+
+        // Parse transactions
         PdfReader reader = new PdfReader(this.transationStream);
 
+        int nb = reader.getNumberOfPages();
+
+        double currentTotal;
         try {
-            PdfReaderContentParser parser = new PdfReaderContentParser(reader);
-            parser.processContent(3, textExtractionStrategy);
+            LCLLocationTextExtractionStrategy strategy = parsePage(reader, 1, transactions, null);
+            currentTotal = strategy.getPreviousTotal();
+
+            for (int i = 2; i < nb; ++i) {
+                strategy = parsePage(reader, i, transactions, strategy.getLastType());
+            }
+
         } finally {
             reader.close();
         }
 
-        this.it = textExtractionStrategy.getTransactions().iterator();
+        // Order transactions
+
+        Collections.sort(transactions, new Comparator<DefaultTransaction>()
+        {
+            public int compare(DefaultTransaction t1, DefaultTransaction t2)
+            {
+                return t1.getRealDate().compareTo(t2.getRealDate());
+            }
+        });
+
+        // Set total
+
+        for (DefaultTransaction transaction : transactions) {
+            currentTotal += transaction.getValue();
+            transaction.setTotal(currentTotal);
+        }
+
+        // Iterator
+        this.it = transactions.iterator();
+    }
+
+    private LCLLocationTextExtractionStrategy parsePage(PdfReader reader, int page,
+        List<DefaultTransaction> transactions, String lastType) throws IOException
+    {
+        LCLLocationTextExtractionStrategy strategy = new LCLLocationTextExtractionStrategy(lastType);
+        PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+        parser.processContent(page, strategy);
+
+        transactions.addAll(strategy.getTransactions());
+
+        return strategy;
     }
 
     public void close() throws IOException

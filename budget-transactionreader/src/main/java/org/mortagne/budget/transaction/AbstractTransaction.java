@@ -25,14 +25,16 @@ import org.apache.commons.lang.StringUtils;
 public class AbstractTransaction implements Transaction
 {
     protected String description;
-    
+
     protected String details;
 
     protected Date date;
 
     protected Date realDate;
 
-    protected float value;
+    protected double value;
+
+    protected double total;
 
     protected String type;
 
@@ -59,10 +61,20 @@ public class AbstractTransaction implements Transaction
     {
         return this.description;
     }
-    
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
     public String getDetails()
     {
         return details;
+    }
+
+    public void setDetails(String details)
+    {
+        this.details = details;
     }
 
     public Date getDate()
@@ -70,18 +82,48 @@ public class AbstractTransaction implements Transaction
         return this.date;
     }
 
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
+
     public Date getRealDate()
     {
         return this.realDate;
     }
 
-    public float getValue()
+    public void setRealDate(Date realDate)
+    {
+        this.realDate = realDate;
+    }
+
+    public double getValue()
     {
         return this.value;
     }
 
+    public void setValue(double value)
+    {
+        this.value = value;
+    }
+
+    public double getTotal()
+    {
+        return this.total;
+    }
+
+    public void setTotal(double total)
+    {
+        this.total = total;
+    }
+    
     public String getType()
     {
         return this.type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
     }
 }
