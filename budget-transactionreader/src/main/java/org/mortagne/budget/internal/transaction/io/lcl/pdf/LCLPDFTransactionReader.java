@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -95,9 +96,22 @@ public class LCLPDFTransactionReader extends AbstractLogEnabled implements Trans
 
         // Set total
 
+        int currentSeconds = 0;
+        Date currentDate = null;
         for (DefaultTransaction transaction : transactions) {
+            // total
             currentTotal += transaction.getValue();
             transaction.setTotal(currentTotal);
+            
+            // date
+            if (!transaction.getRealDate().equals(currentDate)) {
+                currentSeconds = 0;
+                currentDate = transaction.getDate();
+            }
+            if (currentSeconds > 0) {
+                transaction.getRealDate().setSeconds(currentSeconds);
+            }
+            ++currentSeconds;
         }
 
         // Iterator
