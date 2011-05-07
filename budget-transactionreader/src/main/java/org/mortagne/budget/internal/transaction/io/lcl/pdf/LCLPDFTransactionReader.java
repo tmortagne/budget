@@ -96,7 +96,6 @@ public class LCLPDFTransactionReader extends AbstractLogEnabled implements Trans
 
         // Set total
 
-        int currentSeconds = 0;
         Date currentDate = null;
         for (DefaultTransaction transaction : transactions) {
             // total
@@ -105,13 +104,8 @@ public class LCLPDFTransactionReader extends AbstractLogEnabled implements Trans
             
             // date
             if (!transaction.getRealDate().equals(currentDate)) {
-                currentSeconds = 0;
                 currentDate = transaction.getDate();
             }
-            if (currentSeconds > 0) {
-                transaction.getRealDate().setSeconds(currentSeconds);
-            }
-            ++currentSeconds;
         }
 
         // Iterator
