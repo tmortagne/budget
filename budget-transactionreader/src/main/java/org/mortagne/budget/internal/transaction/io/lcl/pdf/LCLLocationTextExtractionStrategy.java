@@ -55,7 +55,7 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
 
     private static final Pattern DESCRIPTIONDATEPATTERN = Pattern.compile(".*(\\d\\d/\\d\\d/\\d\\d).*");
 
-    private static final Pattern DESCRIPTIONDATEPATTERN2 = Pattern.compile(".*(\\d\\d/\\d\\d).*");
+    private static final Pattern DESCRIPTIONDATEPATTERN2 = Pattern.compile(".*((\\d\\d)/(\\d\\d)).*");
 
     /** a summary of all found text */
     private final List<TextChunk> locationalResult = new ArrayList<TextChunk>();
@@ -192,17 +192,29 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
         int bankDateMonth = bankDate.getMonth() + 1;
         int bankDateYear = bankDate.getYear() + 1900;
 
-        String bankDateMonthString = String.valueOf(bankDateMonth);
-
         Matcher matcher = DESCRIPTIONDATEPATTERN2.matcher(description);
+
+        Date realDate;
         if (matcher.matches()) {
+            String realDateMonthString = matcher.group(3);
+            int realDateMonth = Integer.valueOf(realDateMonthString);
             String realDateString = matcher.group(1);
-            return DESCRIPTIONDATEFORMAT.parse(realDateString + '/'
-                + (realDateString.endsWith(bankDateMonthString) ? bankDateYear : (bankDateYear - 1)));
+            realDate =
+                DESCRIPTIONDATEFORMAT.parse(realDateString + '/'
+                    + (realDateMonth > bankDateMonth ? (bankDateYear - 1) : bankDateYear));
         } else {
-            return DATEFORMAT.parse(previousDate + '.'
-                + (previousDate.endsWith(bankDateMonthString) ? bankDateYear : (bankDateYear + 1)));
+            if (description.startsWith("CHQ.")) {
+                String realDateMonthString = previousDate.substring(previousDate.length() - 2);
+                int realDateMonth = Integer.valueOf(realDateMonthString);
+                realDate =
+                    DATEFORMAT.parse(previousDate + '.'
+                        + (realDateMonth > bankDateMonth ? (bankDateYear - 1) : bankDateYear));
+            } else {
+                realDate = (Date) bankDate.clone();
+            }
         }
+
+        return realDate;
     }
 
     private double parseValue(String value)
