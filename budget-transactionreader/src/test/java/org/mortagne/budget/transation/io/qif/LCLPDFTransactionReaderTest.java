@@ -33,7 +33,7 @@ import org.xwiki.test.AbstractComponentTestCase;
 
 public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
 {
-    private static final DateFormat DATEFORMAT = new SimpleDateFormat("dd.MM.yy ss");
+    private static final DateFormat DATEFORMAT = new SimpleDateFormat("dd.MM.yy");
 
     private TransactionReader reader;
 
@@ -58,8 +58,8 @@ public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
 
         Assert.assertEquals(-33.25d, transaction.getValue());
         Assert.assertEquals(11719.66d, transaction.getTotal());
-        Assert.assertEquals(DATEFORMAT.parse("08.10.09 00"), transaction.getDate());
-        Assert.assertEquals(DATEFORMAT.parse("07.10.09 00"), transaction.getRealDate());
+        Assert.assertEquals(DATEFORMAT.parse("08.10.09"), transaction.getDate());
+        Assert.assertEquals(DATEFORMAT.parse("07.10.09"), transaction.getRealDate());
         Assert.assertEquals("PAIEMENTS PAR CARTE", transaction.getType());
         Assert.assertEquals("CB BOUCHERIE LIMOUS 07/10/09", transaction.getDescription());
         Assert.assertNull(transaction.getDetails());
@@ -72,8 +72,8 @@ public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
 
         Assert.assertEquals(-814.27d, transaction.getValue());
         Assert.assertEquals(10882.83d, transaction.getTotal());
-        Assert.assertEquals(DATEFORMAT.parse("08.10.09 00"), transaction.getDate());
-        Assert.assertEquals(DATEFORMAT.parse("08.10.09 03"), transaction.getRealDate());
+        Assert.assertEquals(DATEFORMAT.parse("08.10.09"), transaction.getDate());
+        Assert.assertEquals(DATEFORMAT.parse("08.10.09"), transaction.getRealDate());
         Assert.assertEquals("OPERATIONS DIVERSES", transaction.getType());
         Assert.assertEquals("PRLV ADOPT IMMO", transaction.getDescription());
         Assert.assertEquals("PL19171 PRELT", transaction.getDetails());
