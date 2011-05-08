@@ -11,9 +11,9 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303475833000</creationDate>
-<date>1303652490000</date>
-<contentUpdateDate>1303652490000</contentUpdateDate>
-<version>3.60</version>
+<date>1304796391000</date>
+<contentUpdateDate>1304796391000</contentUpdateDate>
+<version>3.69</version>
 <title>Category sheet page</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -66,9 +66,11 @@
 
 {{velocity}}
 #if ($context.action == 'view')
-  #set($transactions = $xwiki.queryManager.createQuery("select year(realdate.value)||'-'||month(realdate.value), sum(value.value) from BaseObject as obj, StringProperty as category, DateProperty as realdate, FloatProperty as value where obj.className='BudgetCode.AccountTransactionClass' and obj.id=category.id.id and category.id.name='category' and category.value = :category and obj.id=realdate.id.id and realdate.id.name='realdate' and obj.id=value.id.id and value.id.name='value' group by year(realdate.value),month(realdate.value) order by realdate.value", 'hql').bindValue('category', $category.getProperty('name').value).execute())
+  #set($transactions = $xwiki.queryManager.createQuery("select year(realdate.value)||'-'||month(realdate.value), sum(value.value) from BaseObject as obj, StringProperty as category, DateProperty as realdate, DoubleProperty as value where obj.className='BudgetCode.AccountTransactionClass' and obj.id=category.id.id and category.id.name='category' and category.value = :category and obj.id=realdate.id.id and realdate.id.name='realdate' and obj.id=value.id.id and value.id.name='value' group by year(realdate.value),month(realdate.value) order by realdate.value", 'hql').bindValue('category', $category.getProperty('name').value).execute())
   #if ($transactions.size() &gt; 0)
-    {{chart type="bar" source="inline" params="range:B1-B${transactions.size()};series:columns;" title="Category value"}}
+    #set($size = $transactions.size() + 1)
+    {{chart type="bar" source="inline" params="range:B2-B$size;series:columns;" title="Category value"}}
+      |=Date|=Value
       #foreach($transaction in $transactions)
         #set ($positiveValue = $transaction.get(1))
         #if ($positiveValue &lt; 0)

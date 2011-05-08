@@ -11,14 +11,14 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303223069000</creationDate>
-<date>1304245554000</date>
-<contentUpdateDate>1304245554000</contentUpdateDate>
-<version>9.16</version>
+<date>1304849505000</date>
+<contentUpdateDate>1304849505000</contentUpdateDate>
+<version>9.21</version>
 <title>Account transaction sheet page</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
-<comment>Added class property</comment>
+<comment></comment>
 <minorEdit>true</minorEdit>
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
@@ -107,12 +107,16 @@
 </description>
 <details>
 <disabled>0</disabled>
+<editor>PureText</editor>
 <name>details</name>
 <number>12</number>
+<picker>0</picker>
 <prettyName>details</prettyName>
 <rows>5</rows>
 <size>40</size>
 <unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </details>
 <id>
