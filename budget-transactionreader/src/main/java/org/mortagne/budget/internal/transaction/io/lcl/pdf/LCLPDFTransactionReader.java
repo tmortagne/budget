@@ -76,7 +76,7 @@ public class LCLPDFTransactionReader extends AbstractLogEnabled implements Trans
             LCLLocationTextExtractionStrategy strategy = parsePage(reader, 1, transactions, null);
             currentTotal = strategy.getPreviousTotal();
 
-            for (int i = 2; i < nb; ++i) {
+            for (int i = 2; i <= nb; ++i) {
                 strategy = parsePage(reader, i, transactions, strategy.getLastType());
             }
 

@@ -78,9 +78,37 @@ public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
         Assert.assertEquals("PRLV ADOPT IMMO", transaction.getDescription());
         Assert.assertEquals("PL19171 PRELT", transaction.getDetails());
 
+        Transaction adoptimmoTransaction = null;
+        Transaction lastTransaction = null;
         for (transaction = reader.next(); transaction != null;) {
+            if (transaction.getDescription().equals("PRLV ADOPT IMMO")) {
+                adoptimmoTransaction = transaction;
+            } else if (transaction.getDescription().equals("ABONNEMENT VOTRE FORMULE ZEN")) {
+                lastTransaction = transaction;
+            }
+            
             transaction = reader.next();
         }
+        
+        Assert.assertNotNull(adoptimmoTransaction);
+
+        Assert.assertEquals(-877.27d, adoptimmoTransaction.getValue());
+        Assert.assertEquals(10471.28d, adoptimmoTransaction.getTotal());
+        Assert.assertEquals(DATEFORMAT.parse("06.11.09"), adoptimmoTransaction.getDate());
+        Assert.assertEquals(DATEFORMAT.parse("06.11.09"), adoptimmoTransaction.getRealDate());
+        Assert.assertEquals("OPERATIONS DIVERSES", adoptimmoTransaction.getType());
+        Assert.assertEquals("PRLV ADOPT IMMO", adoptimmoTransaction.getDescription());
+        Assert.assertEquals("PL19374 PRELT", adoptimmoTransaction.getDetails());
+        
+        Assert.assertNotNull(lastTransaction);
+
+        Assert.assertEquals(-10.68d, lastTransaction.getValue());
+        Assert.assertEquals(11833.76d, lastTransaction.getTotal());
+        Assert.assertEquals(DATEFORMAT.parse("02.11.09"), lastTransaction.getDate());
+        Assert.assertEquals(DATEFORMAT.parse("02.11.09"), lastTransaction.getRealDate());
+        Assert.assertEquals("FRAIS BANCAIRES", lastTransaction.getType());
+        Assert.assertEquals("ABONNEMENT VOTRE FORMULE ZEN", lastTransaction.getDescription());
+        Assert.assertNull(lastTransaction.getDetails());
 
         this.reader.close();
     }

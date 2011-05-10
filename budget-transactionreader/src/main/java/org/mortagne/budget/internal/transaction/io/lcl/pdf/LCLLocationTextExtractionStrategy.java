@@ -169,8 +169,10 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
                         } else {
                             if (chunk.distParallelStart > 100) {
                                 // Do nothing
+                                currentTransaction = null;
                             } else if (chunk.distParallelStart > FTYPE) {
                                 this.lastType = chunk.text.trim();
+                                currentTransaction = null;
                             } else if (chunk.distParallelStart > FDETAIL) {
                                 String details = currentTransaction.getDetails();
                                 currentTransaction.setDetails(details == null ? chunk.text.trim() : details + "\n"
