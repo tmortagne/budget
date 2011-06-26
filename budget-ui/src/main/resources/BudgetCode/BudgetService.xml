@@ -11,23 +11,25 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303318305000</creationDate>
-<date>1304792952000</date>
-<contentUpdateDate>1304792952000</contentUpdateDate>
-<version>10.9</version>
+<date>1308680574000</date>
+<contentUpdateDate>1308680574000</contentUpdateDate>
+<version>11.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
-<minorEdit>true</minorEdit>
+<minorEdit>false</minorEdit>
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
 <content>{{groovy}}
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
@@ -54,6 +56,8 @@ class BudgetService
     private XWikiContext context;
 
     private Map&lt;String, Filter&gt; filters;
+
+    private Map&lt;String, Category&gt; categories;
 
     public BudgetService(XWikiContext context)
     {
@@ -94,15 +98,38 @@ class BudgetService
         return this.filters;
     }
 
-    public String getCategory(String description)
+    public Map&lt;String, Category&gt; getCategories() throws QueryException
     {
-        Filter filter = getMatchingFilter(description);
+        if (this.categories == null) {
+            Map&lt;String, Category&gt; categories = new HashMap&lt;String, Category&gt;();
 
-        if (filter != null) {
-            return filter.category;
+            QueryManager queryManager = Utils.getComponent(QueryManager.class);
+
+            Query query =
+                queryManager
+                    .createQuery(
+                        "select category.name, category.parent, doc.fullName from Document doc, doc.object(BudgetCode.AccountTransactionCategoryClass) as category",
+                        Query.XWQL);
+
+            List&lt;Object[]&gt; categoriesDatas = query.execute();
+
+            for (Object[] categoryDatas : categoriesDatas) {
+                categories.put((String) categoryDatas[0], new Category((String) categoryDatas[0],
+                    (String) categoryDatas[2]));
+            }
+
+            for (Object[] categoryDatas : categoriesDatas) {
+                Category category = categories.get((String) categoryDatas[0]);
+                category.parent = categories.get((String) categoryDatas[1]);
+                if (category.parent != null) {
+                    category.parent.getChildren().add(category);
+                }
+            }
+
+            this.categories = categories;
         }
 
-        return null;
+        return this.categories;
     }
 
     private Filter getMatchingFilter(String description)
@@ -185,7 +212,7 @@ class BudgetService
 
             xtransaction.setStringValue("account", account);
             xtransaction.setStringValue("description", transaction.getDescription());
-            xtransaction.setStringValue("details", transaction.getDetails());
+            xtransaction.setLargeStringValue("details", transaction.getDetails());
             xtransaction.setStringValue("type", transaction.getType());
             xtransaction.setDateValue("date", transaction.getDate());
             xtransaction.setDateValue("realdate", transaction.getRealDate() != null ? transaction.getRealDate()
@@ -342,13 +369,77 @@ class BudgetService
             this.internal = internal;
         }
     }
+
+    public static class Category
+    {
+        public String name;
+
+        public Category parent;
+
+        public Set&lt;Category&gt; children = new HashSet&lt;Category&gt;();
+
+        public String document;
+
+        public Category(String name, String document)
+        {
+            this.name = name;
+            this.document = document;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public String getDocument()
+        {
+            return document;
+        }
+        
+        public Category getParent()
+        {
+            return parent;
+        }
+        
+        public Category getTopParent()
+        {
+            if (this.parent != null) {
+                return this.parent.getTopParent();
+            }
+
+            return this;
+        }
+
+        public Set&lt;Category&gt; getChildren()
+        {
+            return children;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return this.name.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (super.equals(obj)) {
+                return true;
+            }
+
+            return obj instanceof Category &amp;&amp; this.name.equals(((Category) obj).name);
+        }
+
+        @Override
+        public String toString()
+        {
+            return this.name + "(" + this.parent + ")";
+        }
+    }
 }
+
 
 if (xcontext.get("budgetservice") == null) {
   xcontext.put("budgetservice", new BudgetService(xcontext.context))
-}
-{{/groovy}}
-
-{{velocity}}
-#set($budgetservice = $xcontext.budgetservice)
-{{/velocity}}</content></xwikidoc>
+}{{/groovy}}{{velocity}}#set($budgetservice = $xcontext.budgetservice){{/velocity}}</content></xwikidoc>

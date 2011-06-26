@@ -47,12 +47,12 @@
 <separator> </separator>
 <separators></separators>
 <size>1</size>
-<sort>none</sort>
+<sort>value</sort>
 <sql></sql>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
-<valueField></valueField>
+<valueField>name</valueField>
 <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
 </category>
 <cron>

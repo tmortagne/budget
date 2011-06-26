@@ -11,9 +11,9 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
 <creationDate>1303479758000</creationDate>
-<date>1303667479000</date>
-<contentUpdateDate>1303667479000</contentUpdateDate>
-<version>6.1</version>
+<date>1305048216000</date>
+<contentUpdateDate>1305048216000</contentUpdateDate>
+<version>8.1</version>
 <title>Categories</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -23,7 +23,7 @@
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
 <content>{{velocity}}
-#set($columns = ["name", "description"])
+#set($columns = ["name", "parent"])
 #set($columnsProperties = {
     "name" : { "link" : "view"}
 })
