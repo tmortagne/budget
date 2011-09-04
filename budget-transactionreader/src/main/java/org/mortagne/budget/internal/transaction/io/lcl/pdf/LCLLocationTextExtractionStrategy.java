@@ -106,10 +106,14 @@ public class LCLLocationTextExtractionStrategy implements TextExtractionStrategy
                     } else {
                         tableheaderindex = 0;
                     }
-                } else if (chunk.text.equals("SOIT EN  FRANCS")) {
+                } else if (chunk.text.matches("TOTAUX")) {
                     break;
-                } else if (lastChunk != null && lastChunk.text.trim().equals("ANCIEN SOLDE")) {
+                } else if (lastChunk != null && lastChunk.text.trim().matches("ANCIEN\\s+SOLDE")) {
                     this.previousTotal = parseValue(chunk.text);
+                    if (!this.transactions.isEmpty()) {
+                        this.transactions.clear();
+                        currentTransaction = null;
+                    }
                 } else {
                     if (chunk.sameLine(lastChunk) && currentTransaction != null) {
                         int index = TABLECOLUMNS.length - 1;

@@ -86,10 +86,10 @@ public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
             } else if (transaction.getDescription().equals("ABONNEMENT VOTRE FORMULE ZEN")) {
                 lastTransaction = transaction;
             }
-            
+
             transaction = reader.next();
         }
-        
+
         Assert.assertNotNull(adoptimmoTransaction);
 
         Assert.assertEquals(-877.27d, adoptimmoTransaction.getValue());
@@ -99,7 +99,7 @@ public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
         Assert.assertEquals("OPERATIONS DIVERSES", adoptimmoTransaction.getType());
         Assert.assertEquals("PRLV ADOPT IMMO", adoptimmoTransaction.getDescription());
         Assert.assertEquals("PL19374 PRELT", adoptimmoTransaction.getDetails());
-        
+
         Assert.assertNotNull(lastTransaction);
 
         Assert.assertEquals(-10.68d, lastTransaction.getValue());
