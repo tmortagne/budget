@@ -20,9 +20,9 @@ package org.mortagne.budget.transaction.io;
 
 import java.io.InputStream;
 
-import org.xwiki.component.annotation.ComponentRole;
+import org.xwiki.component.annotation.Role;
 
-@ComponentRole
+@Role
 public interface TransactionReaderFactory
 {
     String getId();

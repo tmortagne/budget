@@ -12,19 +12,22 @@
 	<name>Budget - UI</name>
 	<packaging>xar</packaging>
 	<build>
-    <extensions>
-      <extension>
-        <groupId>org.xwiki.platform.tools</groupId>
-        <artifactId>xwiki-xar-handlers</artifactId>
-        <version>${platform.tool.xar-handler.version}</version>
-      </extension>
-    </extensions>
-    <plugins>
-      <plugin>
-        <groupId>org.xwiki.platform.tools</groupId>
-        <artifactId>xwiki-xar-plugin</artifactId>
-        <version>${platform.tool.xar-plugin.version}</version>
-      </plugin>
-    </plugins>
-  </build>
+		<extensions>
+			<!-- Needed to add support for the "xar" packaging -->
+			<extension>
+				<groupId>org.xwiki.commons</groupId>
+				<artifactId>xwiki-commons-tool-xar-handlers</artifactId>
+				<version>${commons.version}</version>
+			</extension>
+		</extensions>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.xwiki.commons</groupId>
+					<artifactId>xwiki-commons-tool-xar-plugin</artifactId>
+					<version>${commons.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>

@@ -35,7 +35,7 @@ import org.xwiki.test.AbstractComponentTestCase;
 public class QIFTransactionReaderTest extends AbstractComponentTestCase
 {
     private static final DateFormat DATEFORMAT = new SimpleDateFormat("dd.MM.yy");
-    
+
     private TransactionReader reader;
 
     @Before
@@ -48,7 +48,7 @@ public class QIFTransactionReaderTest extends AbstractComponentTestCase
         configuration.setDateFormat(DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE));
         configuration.setCharset("ISO-8859-1");
 
-        TransactionReaderFactory factory = getComponentManager().lookup(TransactionReaderFactory.class, "qif");
+        TransactionReaderFactory factory = getComponentManager().getInstance(TransactionReaderFactory.class, "qif");
         this.reader = factory.createTransactionReader(getClass().getResourceAsStream("/example.qif"), configuration);
     }
 
@@ -64,7 +64,7 @@ public class QIFTransactionReaderTest extends AbstractComponentTestCase
         Assert.assertNull(transaction.getRealDate());
         Assert.assertEquals("Carte", transaction.getType());
         Assert.assertEquals(" CB  SNCF             09/04/11  ", transaction.getDescription());
-        
+
         transaction = reader.next();
 
         Assert.assertNotNull(transaction);

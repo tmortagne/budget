@@ -41,9 +41,6 @@ public class LCLQIFTransactionReaderFactory extends AbstractTransactionReaderFac
         configuration.setDateFormat(DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE));
         configuration.setCharset("ISO-8859-1");
 
-        LCLQIFTransactionReader reader = new LCLQIFTransactionReader(transationStream, configuration);
-        reader.enableLogging(getLogger());
-
-        return reader;
+        return new LCLQIFTransactionReader(transationStream, configuration);
     }
 }

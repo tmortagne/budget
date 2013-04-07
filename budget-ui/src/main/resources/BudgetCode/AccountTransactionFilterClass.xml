@@ -1,152 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>BudgetCode</web>
-<name>AccountTransactionFilterClass</name>
-<language></language>
-<defaultLanguage></defaultLanguage>
-<translation>0</translation>
-<parent></parent>
-<creator>xwiki:XWiki.ThomasMortagne</creator>
-<author>xwiki:XWiki.ThomasMortagne</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303475796000</creationDate>
-<date>1303671118000</date>
-<contentUpdateDate>1303671118000</contentUpdateDate>
-<version>6.7</version>
-<title></title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment>Updated class property</comment>
-<minorEdit>true</minorEdit>
-<syntaxId>xwiki/2.0</syntaxId>
-<hidden>false</hidden>
-<class>
-<name>BudgetCode.AccountTransactionFilterClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<category>
-<cache>0</cache>
-<classname>BudgetCode.AccountTransactionCategoryClass</classname>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<idField>name</idField>
-<multiSelect>0</multiSelect>
-<name>category</name>
-<number>4</number>
-<picker>0</picker>
-<prettyName>category</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators></separators>
-<size>1</size>
-<sort>id</sort>
-<sql></sql>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<valueField></valueField>
-<classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
-</category>
-<description>
-<disabled>0</disabled>
-<editor>---</editor>
-<name>description</name>
-<number>2</number>
-<picker>0</picker>
-<prettyName>description</prettyName>
-<rows>5</rows>
-<size>40</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-</description>
-<internal>
-<defaultValue>0</defaultValue>
-<disabled>0</disabled>
-<displayFormType>select</displayFormType>
-<displayType></displayType>
-<name>internal</name>
-<number>5</number>
-<prettyName>internal</prettyName>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-</internal>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<picker>0</picker>
-<prettyName>name</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-<parent>
-<disabled>0</disabled>
-<name>parent</name>
-<number>6</number>
-<picker>0</picker>
-<prettyName>parent</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</parent>
-<pattern>
-<disabled>0</disabled>
-<name>pattern</name>
-<number>3</number>
-<picker>0</picker>
-<prettyName>pattern</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</pattern>
-</class>
-<object>
-<class>
-<name>XWiki.SheetClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<defaultEditMode>
-<disabled>0</disabled>
-<name>defaultEditMode</name>
-<number>1</number>
-<prettyName>Default Edit Mode</prettyName>
-<size>15</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</defaultEditMode>
-</class>
-<name>BudgetCode.AccountTransactionFilterClass</name>
-<number>0</number>
-<className>XWiki.SheetClass</className>
-<guid>1651d823-a6ba-43b5-aa2a-3f7696b1b24a</guid>
-<property>
-<defaultEditMode></defaultEditMode>
-</property>
-</object>
-<content>{{velocity output="false"}}
+  <web>BudgetCode</web>
+  <name>AccountTransactionFilterClass</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>BudgetCode.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1303475796000</creationDate>
+  <date>1303671118000</date>
+  <contentUpdateDate>1303671118000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <class>
+    <name>BudgetCode.AccountTransactionFilterClass</name>
+    <customClass/>
+    <customMapping/>
+    <defaultViewSheet/>
+    <defaultEditSheet/>
+    <defaultWeb/>
+    <nameField/>
+    <validationScript/>
+    <category>
+      <cache>0</cache>
+      <classname>BudgetCode.AccountTransactionCategoryClass</classname>
+      <disabled>0</disabled>
+      <displayType>select</displayType>
+      <idField>name</idField>
+      <multiSelect>0</multiSelect>
+      <name>category</name>
+      <number>4</number>
+      <picker>0</picker>
+      <prettyName>category</prettyName>
+      <relationalStorage>0</relationalStorage>
+      <separator> </separator>
+      <separators/>
+      <size>1</size>
+      <sort>id</sort>
+      <sql/>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <valueField/>
+      <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+    </category>
+    <description>
+      <disabled>0</disabled>
+      <editor>---</editor>
+      <name>description</name>
+      <number>2</number>
+      <picker>0</picker>
+      <prettyName>description</prettyName>
+      <rows>5</rows>
+      <size>40</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+    </description>
+    <internal>
+      <defaultValue>0</defaultValue>
+      <disabled>0</disabled>
+      <displayFormType>select</displayFormType>
+      <displayType/>
+      <name>internal</name>
+      <number>5</number>
+      <prettyName>internal</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </internal>
+    <name>
+      <disabled>0</disabled>
+      <name>name</name>
+      <number>1</number>
+      <picker>0</picker>
+      <prettyName>name</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </name>
+    <parent>
+      <disabled>0</disabled>
+      <name>parent</name>
+      <number>6</number>
+      <picker>0</picker>
+      <prettyName>parent</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </parent>
+    <pattern>
+      <disabled>0</disabled>
+      <name>pattern</name>
+      <number>3</number>
+      <picker>0</picker>
+      <prettyName>pattern</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </pattern>
+  </class>
+  <object>
+    <class>
+      <name>XWiki.SheetClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultEditMode>
+        <disabled>0</disabled>
+        <name>defaultEditMode</name>
+        <number>1</number>
+        <prettyName>Default Edit Mode</prettyName>
+        <size>15</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultEditMode>
+    </class>
+    <name>BudgetCode.AccountTransactionFilterClass</name>
+    <number>0</number>
+    <className>XWiki.SheetClass</className>
+    <guid>1651d823-a6ba-43b5-aa2a-3f7696b1b24a</guid>
+    <property>
+      <defaultEditMode/>
+    </property>
+  </object>
+  <content>{{velocity output="false"}}
 #set($filter = $doc.getObject("BudgetCode.AccountTransactionFilterClass"))
 {{/velocity}}
 
@@ -166,4 +167,5 @@
 #if ($context.action == 'view')
   {{include document="BudgetCode.AccountFilterView"/}}
 #end
-{{/velocity}}</content></xwikidoc>
+{{/velocity}}</content>
+</xwikidoc>

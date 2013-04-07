@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>BudgetCode</web>
-<name>AccountTransactionClassTemplate</name>
-<language></language>
-<defaultLanguage>en</defaultLanguage>
-<translation>0</translation>
-<parent></parent>
-<creator>xwiki:XWiki.ThomasMortagne</creator>
-<author>xwiki:XWiki.ThomasMortagne</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303476441000</creationDate>
-<date>1303478972000</date>
-<contentUpdateDate>1303478972000</contentUpdateDate>
-<version>2.1</version>
-<title>Tansaction $doc.getObject("BudgetCode.AccountTransactionClass").getProperty("description").value</title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.0</syntaxId>
-<hidden>false</hidden>
-<content>{{include document="BudgetCode.AccountTransactionClass"/}}</content></xwikidoc>
+  <web>BudgetCode</web>
+  <name>AccountTransactionClassTemplate</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>BudgetCode.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1303476441000</creationDate>
+  <date>1364061882000</date>
+  <contentUpdateDate>1364061882000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <content/>
+</xwikidoc>

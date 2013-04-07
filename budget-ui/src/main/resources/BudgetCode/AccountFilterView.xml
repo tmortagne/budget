@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>BudgetCode</web>
-<name>AccountFilterView</name>
-<language></language>
-<defaultLanguage>en</defaultLanguage>
-<translation>0</translation>
-<parent></parent>
-<creator>xwiki:XWiki.ThomasMortagne</creator>
-<author>xwiki:XWiki.ThomasMortagne</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303647923000</creationDate>
-<date>1303670145000</date>
-<contentUpdateDate>1303670145000</contentUpdateDate>
-<version>1.10</version>
-<title></title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>true</minorEdit>
-<syntaxId>xwiki/2.0</syntaxId>
-<hidden>false</hidden>
-<content>{{include document="BudgetCode.BudgetService"/}}
+  <web>BudgetCode</web>
+  <name>AccountFilterView</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>BudgetCode.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1303647923000</creationDate>
+  <date>1303670145000</date>
+  <contentUpdateDate>1303670145000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <content>{{include document="BudgetCode.BudgetService"/}}
 
 = Actions
 
@@ -37,4 +38,5 @@
 #end
 {{/velocity}}
 
-[[Scan&gt;&gt;?filterAction=scan]]</content></xwikidoc>
+[[Scan&gt;&gt;?filterAction=scan]]</content>
+</xwikidoc>

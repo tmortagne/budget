@@ -28,9 +28,8 @@ import org.mortagne.budget.transaction.DefaultTransaction;
 import org.mortagne.budget.transaction.Transaction;
 import org.mortagne.budget.transaction.io.TransactionReader;
 import org.mortagne.budget.transaction.io.TransactionReaderConfiguration;
-import org.xwiki.component.logging.AbstractLogEnabled;
 
-public class QIFTransactionReader extends AbstractLogEnabled implements TransactionReader
+public class QIFTransactionReader implements TransactionReader
 {
     private InputStream transationStream;
 

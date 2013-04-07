@@ -32,12 +32,11 @@ import org.mortagne.budget.transaction.DefaultTransaction;
 import org.mortagne.budget.transaction.Transaction;
 import org.mortagne.budget.transaction.io.TransactionReader;
 import org.mortagne.budget.transaction.io.TransactionReaderConfiguration;
-import org.xwiki.component.logging.AbstractLogEnabled;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 
-public class LCLPDFTransactionReader extends AbstractLogEnabled implements TransactionReader
+public class LCLPDFTransactionReader implements TransactionReader
 {
     private InputStream transationStream;
 
@@ -101,7 +100,7 @@ public class LCLPDFTransactionReader extends AbstractLogEnabled implements Trans
             // total
             currentTotal += transaction.getValue();
             transaction.setTotal(currentTotal);
-            
+
             // date
             if (!transaction.getRealDate().equals(currentDate)) {
                 currentDate = transaction.getDate();

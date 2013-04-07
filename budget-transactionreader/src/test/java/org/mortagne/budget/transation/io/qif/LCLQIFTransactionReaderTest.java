@@ -44,7 +44,7 @@ public class LCLQIFTransactionReaderTest extends AbstractComponentTestCase
 
         TransactionReaderConfiguration configuration = new TransactionReaderConfiguration();
 
-        TransactionReaderFactory factory = getComponentManager().lookup(TransactionReaderFactory.class, "lcl.qif");
+        TransactionReaderFactory factory = getComponentManager().getInstance(TransactionReaderFactory.class, "lcl.qif");
         this.reader =
             factory.createTransactionReader(getClass().getResourceAsStream("/example.lcl.qif"), configuration);
     }

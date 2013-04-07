@@ -1,8 +1,6 @@
 package org.mortagne.budget.transaction.io;
 
-import org.xwiki.component.logging.AbstractLogEnabled;
-
-public abstract class AbstractTransactionReaderFactory extends AbstractLogEnabled implements TransactionReaderFactory
+public abstract class AbstractTransactionReaderFactory implements TransactionReaderFactory
 {
     private String id;
 

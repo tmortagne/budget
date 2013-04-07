@@ -44,7 +44,7 @@ public class LCLPDFTransactionReaderTest extends AbstractComponentTestCase
 
         TransactionReaderConfiguration configuration = new TransactionReaderConfiguration();
 
-        TransactionReaderFactory factory = getComponentManager().lookup(TransactionReaderFactory.class, "lcl.pdf");
+        TransactionReaderFactory factory = getComponentManager().getInstance(TransactionReaderFactory.class, "lcl.pdf");
         this.reader =
             factory.createTransactionReader(getClass().getResourceAsStream("/example.lcl.pdf"), configuration);
     }

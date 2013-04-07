@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>BudgetCode</web>
-<name>AccountView</name>
-<language></language>
-<defaultLanguage>en</defaultLanguage>
-<translation>0</translation>
-<parent></parent>
-<creator>xwiki:XWiki.ThomasMortagne</creator>
-<author>xwiki:XWiki.ThomasMortagne</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303643200000</creationDate>
-<date>1304843736000</date>
-<contentUpdateDate>1304843736000</contentUpdateDate>
-<version>5.1</version>
-<title></title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.0</syntaxId>
-<hidden>false</hidden>
-<content>{{include document="BudgetCode.BudgetService"/}}
+  <web>BudgetCode</web>
+  <name>AccountView</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>BudgetCode.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1303643200000</creationDate>
+  <date>1364062010000</date>
+  <contentUpdateDate>1364062010000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <content>{{include document="BudgetCode.BudgetService"/}}
 
 {{include document="BudgetCode.AccountContext"/}}
 
@@ -68,16 +69,20 @@
 = Transactions =
 
 {{velocity}}
-#set($columns = ["description", "type", "category", "realdate", "value"])
+#set($columns = ["description", "category", "realdate", "value"])
 #set($columnsProperties = {
-    "description" : { "link" : "view", "filterable" : "true"},
+    "description" : { "link" : "view", "type" : "text"},
+    "category" : {"link" : "field", "type" : "text"},
     "value" : { "link" : "view"}
 })
 #set($options = {
    "resultPage":"BudgetCode.AccountTransactionsJSON",
-   "extraParams" : "account=${doc.space}",
+   "className":"BudgetCode.AccountTransactionClass",
+   "selectedColumn":"realdate",
+   "defaultOrder":"desc",
    "translationPrefix" : "budget.accounttransaction.",
-   "rowCount": 50
+   "rowCount": 50,
+   "extraParams" : "account=${doc.space}"
 })
 #livetable("transactions" $columns $columnsProperties $options)
 {{/velocity}}
@@ -94,4 +99,5 @@
 #foreach($attachment in $doc.attachmentList)
   * $attachment.filename ~[[[import&gt;&gt;?action=import&amp;filename=$escapetool.url($attachment.filename)]]~] [{{html}}&lt;a href="$doc.getAttachmentURL($attachment.filename, 'delattachment', "xredirect=${doc.getURL()}")"&gt;delete&lt;/a&gt;{{/html}}]
 #end
-{{/velocity}}</content></xwikidoc>
+{{/velocity}}</content>
+</xwikidoc>

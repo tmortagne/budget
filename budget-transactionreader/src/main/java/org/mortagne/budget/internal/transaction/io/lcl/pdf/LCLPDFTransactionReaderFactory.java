@@ -36,10 +36,6 @@ public class LCLPDFTransactionReaderFactory extends AbstractTransactionReaderFac
     public TransactionReader createTransactionReader(InputStream transationStream,
         TransactionReaderConfiguration configuration)
     {
-        LCLPDFTransactionReader reader = new LCLPDFTransactionReader(transationStream, configuration);
-
-        reader.enableLogging(getLogger());
-
-        return reader;
+        return new LCLPDFTransactionReader(transationStream, configuration);
     }
 }

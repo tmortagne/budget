@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>Budget</web>
-<name>Categories</name>
-<language></language>
-<defaultLanguage>en</defaultLanguage>
-<translation>0</translation>
-<parent>WebHome</parent>
-<creator>xwiki:XWiki.ThomasMortagne</creator>
-<author>xwiki:XWiki.ThomasMortagne</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303479758000</creationDate>
-<date>1305048216000</date>
-<contentUpdateDate>1305048216000</contentUpdateDate>
-<version>8.1</version>
-<title>Categories</title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.0</syntaxId>
-<hidden>false</hidden>
-<content>{{velocity}}
+  <web>Budget</web>
+  <name>Categories</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1303479758000</creationDate>
+  <date>1309629353000</date>
+  <contentUpdateDate>1309629353000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Categories</title>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <content>{{velocity}}
 #set($columns = ["name", "parent"])
 #set($columnsProperties = {
-    "name" : { "link" : "view"}
+    "name" : { "link" : "view", "type" : "text"},
+    "parent" : { "type" : "text"}
 })
 #set($options = {
    "className":"BudgetCode.AccountTransactionCategoryClass",
@@ -51,4 +53,5 @@
   &lt;/div&gt;
 &lt;/form&gt;
 {{/html}}
-{{/velocity}}</content></xwikidoc>
+{{/velocity}}</content>
+</xwikidoc>

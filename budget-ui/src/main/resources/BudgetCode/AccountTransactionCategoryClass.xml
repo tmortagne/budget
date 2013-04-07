@@ -1,141 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xwikidoc>
-<web>BudgetCode</web>
-<name>AccountTransactionCategoryClass</name>
-<language></language>
-<defaultLanguage></defaultLanguage>
-<translation>0</translation>
-<parent></parent>
-<creator>xwiki:XWiki.ThomasMortagne</creator>
-<author>xwiki:XWiki.ThomasMortagne</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303475833000</creationDate>
-<date>1308668494000</date>
-<contentUpdateDate>1308668494000</contentUpdateDate>
-<version>4.67</version>
-<title>Category sheet page</title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>true</minorEdit>
-<syntaxId>xwiki/2.0</syntaxId>
-<hidden>false</hidden>
-<class>
-<name>BudgetCode.AccountTransactionCategoryClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<description>
-<disabled>0</disabled>
-<editor>---</editor>
-<name>description</name>
-<number>2</number>
-<picker>0</picker>
-<prettyName>description</prettyName>
-<rows>5</rows>
-<size>40</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-</description>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<picker>0</picker>
-<prettyName>name</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-<parent>
-<cache>0</cache>
-<classname>BudgetCode.AccountTransactionCategoryClass</classname>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<idField>name</idField>
-<multiSelect>0</multiSelect>
-<name>parent</name>
-<number>3</number>
-<picker>0</picker>
-<prettyName>parent</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators></separators>
-<size>1</size>
-<sort>value</sort>
-<sql></sql>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<valueField>name</valueField>
-<classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
-</parent>
-</class>
-<object>
-<class>
-<name>XWiki.SheetClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<defaultEditMode>
-<disabled>0</disabled>
-<name>defaultEditMode</name>
-<number>1</number>
-<prettyName>Default Edit Mode</prettyName>
-<size>15</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</defaultEditMode>
-</class>
-<name>BudgetCode.AccountTransactionCategoryClass</name>
-<number>0</number>
-<className>XWiki.SheetClass</className>
-<guid>e95d56e1-b184-4ca5-9541-ceb047d4af5d</guid>
-</object>
-<content>{{include document="BudgetCode.BudgetService"/}}
 
-{{velocity ouput="true"}}
+<xwikidoc>
+  <web>BudgetCode</web>
+  <name>AccountTransactionCategoryClass</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>BudgetCode.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1303475833000</creationDate>
+  <date>1365256375000</date>
+  <contentUpdateDate>1365256375000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Category $doc.getObject("BudgetCode.AccountTransactionCategoryClass").getProperty("name").value</title>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <class>
+    <name>BudgetCode.AccountTransactionCategoryClass</name>
+    <customClass/>
+    <customMapping/>
+    <defaultViewSheet/>
+    <defaultEditSheet/>
+    <defaultWeb/>
+    <nameField/>
+    <validationScript/>
+    <description>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <editor>---</editor>
+      <name>description</name>
+      <number>3</number>
+      <picker>0</picker>
+      <prettyName>description</prettyName>
+      <rows>5</rows>
+      <size>40</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+    </description>
+    <displayName>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <name>displayName</name>
+      <number>2</number>
+      <picker>0</picker>
+      <prettyName>displayName</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </displayName>
+    <name>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <name>name</name>
+      <number>1</number>
+      <picker>0</picker>
+      <prettyName>name</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </name>
+    <parent>
+      <cache>0</cache>
+      <classname>BudgetCode.AccountTransactionCategoryClass</classname>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <displayType>select</displayType>
+      <idField>name</idField>
+      <multiSelect>0</multiSelect>
+      <name>parent</name>
+      <number>4</number>
+      <picker>0</picker>
+      <prettyName>parent</prettyName>
+      <relationalStorage>0</relationalStorage>
+      <separator> </separator>
+      <separators/>
+      <size>1</size>
+      <sort>value</sort>
+      <sql/>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <valueField>name</valueField>
+      <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+    </parent>
+  </class>
+  <object>
+    <class>
+      <name>XWiki.ClassSheetBinding</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <sheet>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>sheet</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Sheet</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </sheet>
+    </class>
+    <name>BudgetCode.AccountTransactionCategoryClass</name>
+    <number>0</number>
+    <className>XWiki.ClassSheetBinding</className>
+    <guid>e2fe39ca-8bcf-47e2-99a2-668bb11f218f</guid>
+    <property>
+      <sheet>BudgetCode.AccountTransactionCategoryClass</sheet>
+    </property>
+  </object>
+  <content>{{include document="BudgetCode.BudgetService"/}}
+
+{{velocity ouput="false"}}
 #set($categoryObject = $doc.getObject("BudgetCode.AccountTransactionCategoryClass"))
 #set($categories = $budgetservice.categories)
-#set($category = $categories.get($categoryObject.getProperty('name').value))
+#if ($categoryObject)
+  #set($category = $categories.get($categoryObject.getProperty('name').value))
+#end
 
 #macro(printCategoryChildren $children $level $inCategories)
   #foreach ($child in $children)
     #set($void = $inCategories.add($child.name))
-    * [[$child.name&gt;&gt;$child.document]]
-    ###foreach ($i in [0..$level])*#end $child.name
-    #set($childlevel = $level + 1)
-    #printCategoryChildren($child.children $childlevel)
+    #foreach ($i in [0..$level])*#end [[$child.name&gt;&gt;$child.document]]
+    #set($level = $level + 1)
+    #printCategoryChildren($child.children $level $inCategories)
+    #set($level = $level - 1)
   #end
 #end
 {{/velocity}}
 
 {{velocity}}
 #if ($categoryObject)
-  Name: $categoryObject.get('name')
-  Parent: $categoryObject.parent
-  Description: $categoryObject.description
+  #if ($context.action == 'view')
+    Name: $categoryObject.get('name')
+    #if ($category.parent)
+      Parent: [[$category.parent.name&gt;&gt;$category.parent.document]]
+    #end
+    Description: $categoryObject.description
+  #else
+    Name: $categoryObject.get('name')
+    Parent: $categoryObject.parent
+    Description: $categoryObject.description
+  #end
 #else
   {{warning}}No //BudgetCode.AccountTransactionCategoryClass// object found.{{/warning}} 
 #end
 {{/velocity}}
 
 {{velocity}}
-#if ($context.action == 'view')
+#if ($category &amp;&amp; $context.action == 'view')
   #set($inCategories = [$category.name])
   #printCategoryChildren($category.children 0 $inCategories)
   #set($categoriesquery = '')
@@ -143,26 +177,55 @@
     #if ($categoriesquery != '')
       #set($categoriesquery = $categoriesquery + ',')
     #end
-    #set($categoriesquery = $categoriesquery + '?' + $velocityCount)
+    #set($categoriesquery = $categoriesquery + '?')
   #end
 #end
 {{/velocity}}
 
 {{velocity}}
-#if ($context.action == 'view')
-  #set($transactions = $xwiki.queryManager.createQuery("select year(realdate.value)||'-'||month(realdate.value), sum(value.value) from BaseObject as obj, StringProperty as category, DateProperty as realdate, DoubleProperty as value where obj.className='BudgetCode.AccountTransactionClass' and obj.id=category.id.id and category.id.name='category' and category.value in ($categoriesquery) and obj.id=realdate.id.id and realdate.id.name='realdate' and obj.id=value.id.id and value.id.name='value' group by year(realdate.value),month(realdate.value) order by realdate.value", 'hql').bindValues($inCategories).execute())
+#if ($category &amp;&amp; $context.action == 'view')
+  #set($query = $xwiki.queryManager.createQuery("select year(realdate.value)||'-'||month(realdate.value), sum(value.value) from BaseObject as obj, StringProperty as category, DateProperty as realdate, DoubleProperty as value where obj.className='BudgetCode.AccountTransactionClass' and obj.id=category.id.id and category.id.name='category' and category.value in ($categoriesquery) and obj.id=realdate.id.id and realdate.id.name='realdate' and obj.id=value.id.id and value.id.name='value' group by year(realdate.value),month(realdate.value) order by realdate.value", 'hql'))
+  #set($transactions = $query.bindValues($inCategories).execute())
   #if ($transactions.size() &gt; 0)
     #set($size = $transactions.size() + 1)
-    {{chart type="bar" source="inline" params="range:B2-B$size;series:columns;" title="Category value"}}
+    #set($offset = $size - 11)
+    #if ($size &gt; 10)
+      #set($size = $size - $offset)
+    #end
+    {{chart type="bar" source="inline" params="range:B2-B$size;series:columns;" title="Category value" width="1200"}}
       |=Date|=Value
       #foreach($transaction in $transactions)
-        #set ($positiveValue = $transaction.get(1))
-        #if ($positiveValue &lt; 0)
-          #set ($positiveValue = $positiveValue * -1)
+        #if ($foreach.count &gt; $offset)
+          #set ($positiveValue = $transaction.get(1))
+          #if ($positiveValue &lt; 0)
+            #set ($positiveValue = $positiveValue * -1)
+          #end
+          |$transaction.get(0)|$positiveValue
         #end
-        |$transaction.get(0)|$positiveValue
       #end
     {{/chart}}
   #end
 #end
-{{/velocity}}</content></xwikidoc>
+{{/velocity}}
+
+= Transactions =
+
+{{velocity}}
+#set($columns = ["description", "category", "realdate", "value"])
+#set($columnsProperties = {
+    "description" : { "link" : "view", "type" : "text"},
+    "category" : {"link" : "field", "type" : "text"},
+    "value" : { "link" : "view"}
+})
+#set($options = {
+   "resultPage":"BudgetCode.AccountTransactionsJSON",
+   "className":"BudgetCode.AccountTransactionClass",
+   "selectedColumn":"realdate",
+   "defaultOrder":"desc",
+   "translationPrefix" : "budget.accounttransaction.",
+   "tagCloud" : false,
+   "extraParams" : "rootCategory=${category.name}"
+})
+#livetable("transactions" $columns $columnsProperties $options)
+{{/velocity}}</content>
+</xwikidoc>

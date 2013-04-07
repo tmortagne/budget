@@ -34,24 +34,20 @@
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.xwiki.commons</groupId>
 			<artifactId>xwiki-commons-component-api</artifactId>
-			<version>${xwiki.commons.version}</version>
+			<version>${commons.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.xwiki.commons</groupId>
 			<artifactId>xwiki-commons-script</artifactId>
-			<version>${xwiki.commons.version}</version>
+			<version>${commons.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>com.xpn.xwiki.platform</groupId>
-			<artifactId>xwiki-core</artifactId>
-			<version>${xwiki.platform.version}</version>
+			<groupId>org.xwiki.platform</groupId>
+			<artifactId>xwiki-platform-oldcore</artifactId>
+			<version>${platform.version}</version>
 		</dependency>
 
 		<!-- PDF parsing -->
@@ -65,9 +61,13 @@
 		<dependency>
 			<groupId>org.xwiki.commons</groupId>
 			<artifactId>xwiki-commons-test</artifactId>
-			<version>${xwiki.commons.version}</version>
+			<version>${commons.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
 	</dependencies>
 	<repositories>
 		<repository>

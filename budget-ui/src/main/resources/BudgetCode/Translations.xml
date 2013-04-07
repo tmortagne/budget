@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>BudgetCode</web>
-<name>Translations</name>
-<language></language>
-<defaultLanguage>en</defaultLanguage>
-<translation>0</translation>
-<parent></parent>
-<creator>xwiki:XWiki.ThomasMortagne</creator>
-<author>xwiki:XWiki.ThomasMortagne</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303324764000</creationDate>
-<date>1304255732000</date>
-<contentUpdateDate>1304255732000</contentUpdateDate>
-<version>1.13</version>
-<title></title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>true</minorEdit>
-<syntaxId>xwiki/2.0</syntaxId>
-<hidden>false</hidden>
-<content>budget.emptyvalue=
+  <web>BudgetCode</web>
+  <name>Translations</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>BudgetCode.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1303324764000</creationDate>
+  <date>1309629370000</date>
+  <contentUpdateDate>1309629370000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <content>budget.emptyvalue=
 
 budget.accounttransaction.description=Description
 budget.accounttransaction.type=Type
@@ -31,10 +32,12 @@ budget.accounttransaction.date=Date
 budget.accounttransaction.realdate=Real date
 budget.accounttransaction.value=Value
 budget.accounttransaction.total=Total
+budget.accounttransaction.name=Name
 budget.accounttransaction.emptyvalue=
 
 budget.category.name=Name
 budget.category.description=Description
+budget.category.parent=Parent
 budget.category.emptyvalue=
 
 budget.filter.name=Name
@@ -44,4 +47,5 @@ budget.filter.internal=Internal
 budget.filter.emptyvalue=
 
 budget.account.name=Name
-budget.account.bank=Bank</content></xwikidoc>
+budget.account.bank=Bank</content>
+</xwikidoc>

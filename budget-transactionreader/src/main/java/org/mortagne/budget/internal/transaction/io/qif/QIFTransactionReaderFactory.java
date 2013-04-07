@@ -36,10 +36,6 @@ public class QIFTransactionReaderFactory extends AbstractTransactionReaderFactor
     public TransactionReader createTransactionReader(InputStream transationStream,
         TransactionReaderConfiguration configuration)
     {
-        QIFTransactionReader reader = new QIFTransactionReader(transationStream, configuration);
-
-        reader.enableLogging(getLogger());
-
-        return reader;
+        return new QIFTransactionReader(transationStream, configuration);
     }
 }

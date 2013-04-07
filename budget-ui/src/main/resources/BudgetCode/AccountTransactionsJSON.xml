@@ -1,33 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xwikidoc>
-<web>BudgetCode</web>
-<name>AccountTransactionsJSON</name>
-<language></language>
-<defaultLanguage>en</defaultLanguage>
-<translation>0</translation>
-<parent></parent>
-<creator>xwiki:XWiki.ThomasMortagne</creator>
-<author>xwiki:XWiki.ThomasMortagne</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.ThomasMortagne</contentAuthor>
-<creationDate>1303477740000</creationDate>
-<date>1303478037000</date>
-<contentUpdateDate>1303478037000</contentUpdateDate>
-<version>1.1</version>
-<title></title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>true</minorEdit>
-<syntaxId>xwiki/2.0</syntaxId>
-<hidden>false</hidden>
-<content>{{include document="XWiki.LiveTableResultsMacros" /}}
 
-{{velocity}}
+<xwikidoc>
+  <web>BudgetCode</web>
+  <name>AccountTransactionsJSON</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>BudgetCode.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1303477740000</creationDate>
+  <date>1365255886000</date>
+  <contentUpdateDate>1365255886000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <content>{{include document="XWiki.LiveTableResultsMacros" /}}
+
+{{include document="BudgetCode.BudgetService"/}}
+
+{{velocity output="false"}}
+#set($query = "select doc.fullName, transaction.description, transaction.type, transaction.category, transaction.realdate, transaction.value from Document doc, doc.object(BudgetCode.AccountTransactionClass) transaction where doc.name &lt;&gt; 'AccountTransactionClassTemplate'")
+
+#set($queryParameters = [])
+#set($queryParametersIndex = 1)
+
 #if ($request.account)
-  #gridresultwithfilter("BudgetCode.AccountTransactionClass", $request.collist.split(","), "", " and doc.space = ? and doc.name &lt;&gt; 'AccountTransactionClassTemplate'", [$request.account])
-#else
-  #gridresultwithfilter("BudgetCode.AccountTransactionClass", $request.collist.split(","), "", " and doc.name &lt;&gt; 'AccountTransactionClassTemplate'")
+  #set($query = "$query and doc.space = ?$queryParametersIndex")
+  #set($queryParametersIndex = $queryParametersIndex + 1)
+  #set($void = $queryParameters.add($request.account))
 #end
-{{/velocity}}</content></xwikidoc>
+
+#set($categoriesMap = $budgetservice.categories)
+#if ($request.rootCategory)
+  #set($categories = $budgetservice.getCategoriesSet($request.rootCategory))
+  #if (!$categories.isEmpty())
+    #set($query = "$query and transaction.category in (")
+
+    #foreach($category in $categories)
+      #if ($foreach.count &gt; 1)
+        #set($query = $query + ', ')
+      #end
+      #set($query = "$query?$queryParametersIndex")
+      #set($queryParametersIndex = $queryParametersIndex + 1)
+      #set($void = $queryParameters.add($category.name))
+    #end
+
+    #set($query = $query + ')')
+  #end
+#end
+
+##
+## Filter
+##
+#if ("$!request.description" != '')
+  #set($query = "$query and UPPER(transaction.description) LIKE ?$queryParametersIndex")
+  #set($queryParametersIndex = $queryParametersIndex + 1)
+  #set($void = $queryParameters.add("%${request.description.toUpperCase()}%"))
+#end
+#if ("$!request.type" != '')
+  #set($query = "$query and UPPER(transaction.type) LIKE ?$queryParametersIndex")
+  #set($queryParametersIndex = $queryParametersIndex + 1)
+  #set($void = $queryParameters.add("%${request.type.toUpperCase()}%"))
+#end
+#if ("$!request.category" != '')
+  #set($category = "${request.category.trim().toUpperCase()}")
+  #if ($category == '*')
+    #set($query = "$query and transaction.category = ''")
+  #else
+    #set($query = "$query and UPPER(transaction.category) LIKE ?$queryParametersIndex")
+    #set($queryParametersIndex = $queryParametersIndex + 1)
+    #set($void = $queryParameters.add("%$category%"))
+  #end
+#end
+
+##
+## Order
+##
+#set($order = "$!request.sort")
+#if ($order != '')
+  #set($orderDirection = "$!{request.get('dir').toLowerCase()}")
+    #if("$!orderDirection" != '' &amp;&amp; "$!orderDirection" != 'asc')
+      #set($orderDirection = 'desc')
+    #end
+    #set($query = "$query ORDER BY transaction.$order $orderDirection")
+#end
+
+##
+## Offset
+##
+#set($offset = $mathtool.toInteger($request.get('offset')))
+## offset starts from 0 in velocity and 1 in javascript
+#set($offset = $offset - 1)
+#if (!$offset || $offset &lt; 0)
+  #set($offset = 0)
+#end
+
+##
+## Limit
+##
+#set($limit = $mathtool.toInteger($request.get('limit')))
+#if (!$limit)
+  #set ($limit = 15)
+#end
+
+#macro(buildRowJSON $result $rows)
+  #set($row = {'doc_viewable': true})
+
+  #set($void = $row.put('doc_url', $xwiki.getURL($result.get(0))))
+
+  #set($void = $row.put('description', $result.get(1)))
+  #set($void = $row.put('description_value', $result.get(1)))
+  #set($void = $row.put('description_url', ''))
+
+  #set($void = $row.put('type', $result.get(2)))
+  #set($void = $row.put('type_value', $result.get(2)))
+  #set($void = $row.put('type_url', ''))
+  
+  #set($category = $categoriesMap.get($result.get(3)))
+  #set($void = $row.put('category', $category.name))
+  #set($void = $row.put('category_value', $category.name))
+  #set($void = $row.put('category_url', $xwiki.getURL($category.document)))
+
+  #set($void = $row.put('realdate', "${result.get(4)}"))
+  #set($void = $row.put('realdate_value', "${result.get(4)}"))
+  #set($void = $row.put('realdate_url', ''))
+
+  #set($void = $row.put('value', $result.get(5)))
+  #set($void = $row.put('value_value', $result.get(5)))
+  #set($void = $row.put('value_url', ''))
+
+  #set($void = $rows.add($row))
+#end
+
+#set($query = $services.query.xwql($query).setLimit($limit).setOffset($offset).bindValues($queryParameters))
+#set($results = $query.execute())
+
+#set($map = {})
+
+#set($void = $map.put('reqNo', $mathtool.toInteger($request.reqNo)))
+
+#set($void = $map.put('totalrows', $query.count()))
+#set($void = $map.put('returnedrows', $mathtool.min($results.size(), $limit)))
+#set($void = $map.put('offset', $mathtool.add($offset, 1)))
+
+## Rows
+#set($rows = [])
+#foreach($result in $results)
+  #buildRowJSON($result $rows)
+#end
+#set($void = $map.put('rows', $rows))
+{{/velocity}}
+
+{{velocity wiki="false"}}
+$jsontool.serialize($map)
+{{/velocity}}</content>
+</xwikidoc>
