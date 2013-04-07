@@ -27,5 +27,5 @@ nbproject
 .clover
 
 # budget specific
-BudgetServiceGroovy.java
+BudgetServiceGroovy.groovy
 send.sh
