@@ -1,4 +1,4 @@
 Budget Manager
 ==============
 
-See http://budget.mortagne.org for details.
+See https://github.com/tmortagne/budget/wiki for details.
